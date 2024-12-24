@@ -231,25 +231,25 @@ const setTranslation = async (language) => {
     });
 };
 
-// Flags Hover 
+// Language Selection 
 
 const languageIcons = document.querySelectorAll('.language-container');
-const flags = document.querySelectorAll('.language-flag');
 
-const handleFlagDisplay = (icon) => {
-    (languageIcons[1])
+languageIcons[1].classList.add('bold-text');
+
+const handleLanguageSelection = (icon) => {
     for (let i = 0; i < languageIcons.length; i++) {
         if (icon === languageIcons[i]) {
-            flags[i].classList.add('show-flag');
-            flags[(i + 1) % 3].classList.remove('show-flag');
-            flags[(i + 2) % 3].classList.remove('show-flag');
+            languageIcons[i].classList.add('bold-text');
+            languageIcons[(i + 1) % 3].classList.remove('bold-text');
+            languageIcons[(i + 2) % 3].classList.remove('bold-text');
         };
     };
 };
 
 languageIcons.forEach((icon) => {
     icon.addEventListener('click', () => {
-        handleFlagDisplay(icon);
+        handleLanguageSelection(icon);
         setTranslation(icon);
     });
 });
@@ -543,7 +543,7 @@ const displayConcerts = async () => {
                     </div>
                     <div class="location-container">
                         <div class="city">${concert.city}</div>
-                        <div>(<span class="country">${concert.country}</span>)</div>
+                        <div class="country">(<span >${concert.country}</span>)</div>
                     </div>
                 </div>`;
     };
