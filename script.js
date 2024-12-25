@@ -605,16 +605,61 @@ concertsLists.forEach((list) => {
 
 // Gallery 
 
-const images = Array.from(document.querySelectorAll('.image-container'));
+const images = Array.from(document.querySelectorAll('.image'));
+const fullScreenContainer = document.getElementById('fullscreen-container');
+const overlayBody = document.getElementById('overlay-body');
+const scrollLeft = document.getElementById('scroll-left');
+const scrollRight = document.getElementById('scroll-right');
 
-const displayFullScreen = (event) => {
+let isFullscreen = false;
+
+const displayFullscreen = (event) => {
     const selectedImage = event.target;
-    console.log(selectedImage)
-}
+    if (!isFullscreen) {
+        fullScreenContainer.children[1].children[0].src = selectedImage.src;
+        fullScreenContainer.classList.add('fullscreen');
+        //overlayBody.classList.add('show-overlay');
+        isFullscreen = true;
+    };
+};
+
+const hideFullscreen = () => {
+    if (isFullscreen) {
+        fullScreenContainer.src = '';
+        fullScreenContainer.classList.remove('fullscreen');
+        //overlayBody.classList.remove('show-overlay');
+        isFullscreen = false;
+    };
+};
+
+const handleScroll = (event) => {
+    if (event.target === scrollLeft) {
+        console.log('left');
+    } else if (event.target === scrollRight) {
+        console.log('right');
+    };
+};
 
 images.forEach(image => {
-    image.addEventListener('click', displayFullScreen)
-})
+    image.addEventListener('click', displayFullscreen)
+});
+
+fullScreenContainer.addEventListener('click', hideFullscreen);
+
+scrollLeft.addEventListener('click', handleScroll);
+scrollLeft.addEventListener('mouseenter', () => {
+    fullScreenContainer.removeEventListener('click', hideFullscreen)
+});
+scrollLeft.addEventListener('mouseleave', () => {
+    fullScreenContainer.addEventListener('click', hideFullscreen)
+});
+scrollRight.addEventListener('click', handleScroll);
+scrollRight.addEventListener('mouseenter', () => {
+    fullScreenContainer.removeEventListener('click', hideFullscreen)
+});
+scrollRight.addEventListener('mouseleave', () => {
+    fullScreenContainer.addEventListener('click', hideFullscreen)
+});
 
 // Stories 
 
