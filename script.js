@@ -141,7 +141,7 @@ const translation = {
                     primer trabajo de la formación, un
                     disco argumental y también descriptivo, enérgico y emocional. El disco es una
                     fotografía sonora de la música acústica del trío con pequeñas pinceladas de
-                    postproducción.4 suites para 4 relatos breves. Cada tema está inspirado en una historia ficticia, en un
+                    postproducción. 4 suites para 4 relatos breves. Cada tema está inspirado en una historia ficticia, en un
                     personaje o en una sociedad que perciben la realidad distorsionada de alguna manera.
                 </p>
                 <p class="scroll-text left">
@@ -328,16 +328,14 @@ instagramIcon.addEventListener('mouseleave', () => {
 
 // Parallax 
 
-const homeSection = document.getElementById('home');
 const storiesSection = document.getElementById('stories');
 const aboutUsSection = document.getElementById('about-us');
 
 const handleParallax = () => {
     const offset = window.scrollY;
 
-    homeSection.style.backgroundPositionY = -435 + offset * 0.7 + "px";
-    storiesSection.style.backgroundPositionY = 800 + offset * 0.7 + "px";
-    aboutUsSection.style.backgroundPositionY = -400 + offset * 0.7 + "px";
+    storiesSection.style.backgroundPositionY = -300 + offset * 0.7 + "px";
+    aboutUsSection.style.backgroundPositionY = 500 + offset * 0.7 + "px";
 }
 
 window.addEventListener('scroll', handleParallax);

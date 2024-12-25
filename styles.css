@@ -1,7 +1,6 @@
 *,
 *::after,
 *::before {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -93,6 +92,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 50px;
   height: 50px;
   grid-area: logo;
   justify-self: center;
@@ -100,7 +100,7 @@ body {
   color: black;
   padding: 8px;
   border-radius: 50%;
-  background-color: transparent;
+  border: 0px dotted var(--pink);
   transition: all 0.3s ease;
 }
 
@@ -110,6 +110,10 @@ body {
   align-items: center;
   width: 100%;
   height: 100%;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  padding: 7px;
 }
 
 .home {
@@ -117,18 +121,17 @@ body {
 }
 
 .home path {
-  fill: black;
+  fill: rgba(0, 0, 0, 0.379);
   transition: all 0.3s ease;
 }
 
 #logo-container:hover {
   cursor: pointer;
-  background-color: black;
-  color: white;
+  border: 5px dotted var(--pink);
 }
 
 #logo-container:hover .home path {
-  fill: white;
+  fill: black;
 }
 
 #languages-list {
@@ -156,17 +159,18 @@ body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   font-size: 35px;
   font-weight: 300;
   text-align: center;
   grid-area: link;
   align-self: center;
+  letter-spacing: 3px;
 }
 
 .list-item {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   line-height: 0.7;
 }
 
@@ -339,7 +343,7 @@ body {
 /* SECTIONS */
 
 .section {
-  min-height: 200vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -356,16 +360,46 @@ body {
 }
 
 #home {
-  height: 200vh;
+  height: 150vh;
+  padding: 0;
+}
+
+#video-background {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+#video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
 }
 
 #main-title {
-  width: 1000px;
-  margin-top: -100px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: hsla(0, 0%, 100%, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
 }
 
 #main-logo {
-  width: 100%;
+  width: 80%;
+  height: 80%;
+  position: relative;
+  top: -145px;
 }
 
 .section-title {
@@ -382,7 +416,6 @@ body {
 
 #video {
   background-color: var(--light-gray);
-  gap: 70px;
 }
 
 #promo-video {
@@ -394,6 +427,23 @@ body {
 
 #music {
   background-color: var(--light-pink);
+}
+
+#music a {
+  width: 700px;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 700px;
+  border: 0px dotted black;
+}
+
+#music a:hover {
+  border: 5px dotted black;
+  transform: scale(1.02);
+}
+
+#music img {
+  width: 100%;
 }
 
 /* STORIES */
@@ -440,7 +490,7 @@ body {
 /* ABOUT US */
 
 #about-us {
-  background: url(images/studio.jpg);
+  background: url(images/recording/17.jpg);
   background-size: cover;
   color: white;
   position: relative;
