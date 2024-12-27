@@ -45,46 +45,47 @@ const menuOptions = document.querySelectorAll('.menu-option');
 const sectionTitles = document.querySelectorAll('.section-title');
 const aboutUs = document.getElementById('about-us-text');
 const concertTexts = document.querySelectorAll('.concert-text');
+const storyContainer = document.querySelector('.story-container');
 const storyTitle = document.querySelector('.story-title');
-const storyText = document.querySelector('.story-text');
+const storyContent = document.querySelector('.story-content');
+const menuStories = Array.from(document.querySelectorAll('.menu-story'));
 
-/*const handleStoriesTranslation = async (lang) => {
-    const response = await fetch('/stories.txt');
-    const translations = await response.text();
+const handleStoriesTranslation = async (lang) => {
+    const response = await fetch('stories.json');
+    const translations = await response.json();
 
     const appendTranslations = (lang, titleIndex, textTitle) => {
-        if (lang === 'ca') {
-            storyTitle.innerHTML = translations
-            storyText.innerHTML = translations
-        } else if (lang === 'es') {
-            storyTitle.innerHTML = translations[lang].title[titleIndex];
-            storyText.innerHTML = translations[lang].text[textTitle]
-        } else if (lang === 'en') {
-            storyTitle.innerHTML = translations[lang].title[titleIndex];
-            storyText.innerHTML = translations[lang].text[textTitle]
-        }; 
+        storyContent.innerHTML = '';
+        storyTitle.innerHTML = '';
+
+        const title = translations[lang].title[titleIndex];
+        const content = translations[lang].text[textTitle];
+
+        storyTitle.innerHTML = title;
+        content.forEach((paragraph) => {
+            const p = document.createElement('p');
+            p.innerText = paragraph;
+            p.classList.add('story-text', 'text');
+            storyContent.appendChild(p);
+        });
     };
 
     if (document.location.pathname.includes("l'ampolla.html")) {
-        appendTranslations('ca', 0, lampolla);
-        appendTranslations('es', 0, lampolla);
-        appendTranslations('en', 0, lampolla);
-    } else if (document.location.pathname.includes("triàfobia.html")) {
-        appendTranslations('ca', 1, triafobia);
-        appendTranslations('es', 1, triafobia);
-        appendTranslations('en', 1, triafobia);
+        appendTranslations(lang, 0, 'lampolla');
+    } else if (document.location.pathname.includes("triafobia.html")) {
+        appendTranslations(lang, 1, 'triafobia');
     } else if (document.location.pathname.includes("fum.html")) {
-        appendTranslations('ca', 2, fum);
-        appendTranslations('es', 2, fum);
-        appendTranslations('en', 2, fum);
-    } else if (document.location.pathname.includes("uns segons de silenci.html")) {
-        appendTranslations('ca', 3, silenci);
-        appendTranslations('es', 3, silenci);
-        appendTranslations('en', 3, silenci);
+        appendTranslations(lang, 2, 'fum');
+    } else if (document.location.pathname.includes("uns_segons_de_silenci.html")) {
+        appendTranslations(lang, 3, 'silenci');
+    };
+
+    for (let i = 0; i < menuStories.length; i++) {
+        menuStories[i].innerText = translations[lang].title[i];
     };
 };
 
-handleStoriesTranslation('ca')*/
+handleStoriesTranslation('es');
 
 const translation = {
     ca: {
@@ -187,13 +188,18 @@ const setTranslation = async (language) => {
             textToTranslate[i].offsetHeight;
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
-        for (let i = 0; i < menuOptions.length; i++) {
-            menuOptions[i].innerText = translation.ca.menu[i];
-            sectionTitles[i].innerText = translation.ca.menu[i];
-        };
-        aboutUs.innerHTML = translation.ca.about;
-        for (let i = 0; i < concertTexts.length; i++) {
-            concertTexts[i].innerText = translation.ca.concert[i];
+
+        if (document.location.pathname.includes('index.hmtl')) {
+            for (let i = 0; i < menuOptions.length; i++) {
+                menuOptions[i].innerText = translation.ca.menu[i];
+                sectionTitles[i].innerText = translation.ca.menu[i];
+            };
+            aboutUs.innerHTML = translation.ca.about;
+            for (let i = 0; i < concertTexts.length; i++) {
+                concertTexts[i].innerText = translation.ca.concert[i];
+            };
+        } else {
+            await handleStoriesTranslation('ca');
         };
     } else if (language === languageIcons[1]) {
         for (let i = 0; i < textToTranslate.length; i++) {
@@ -201,13 +207,18 @@ const setTranslation = async (language) => {
             textToTranslate[i].offsetHeight;
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
-        for (let i = 0; i < menuOptions.length; i++) {
-            menuOptions[i].innerText = translation.es.menu[i];
-            sectionTitles[i].innerText = translation.es.menu[i];
-        };
-        aboutUs.innerHTML = translation.es.about;
-        for (let i = 0; i < concertTexts.length; i++) {
-            concertTexts[i].innerText = translation.es.concert[i];
+
+        if (document.location.pathname.includes('index.hmtl')) {
+            for (let i = 0; i < menuOptions.length; i++) {
+                menuOptions[i].innerText = translation.es.menu[i];
+                sectionTitles[i].innerText = translation.es.menu[i];
+            };
+            aboutUs.innerHTML = translation.es.about;
+            for (let i = 0; i < concertTexts.length; i++) {
+                concertTexts[i].innerText = translation.es.concert[i];
+            };
+        } else {
+            await handleStoriesTranslation('es');
         };
     } else if (language === languageIcons[2]) {
         for (let i = 0; i < textToTranslate.length; i++) {
@@ -215,13 +226,18 @@ const setTranslation = async (language) => {
             textToTranslate[i].offsetHeight;
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
-        for (let i = 0; i < menuOptions.length; i++) {
-            menuOptions[i].innerText = translation.en.menu[i];
-            sectionTitles[i].innerText = translation.en.menu[i];
-        };
-        aboutUs.innerHTML = translation.en.about;
-        for (let i = 0; i < concertTexts.length; i++) {
-            concertTexts[i].innerText = translation.en.concert[i];
+
+        if (document.location.pathname.includes('index.hmtl')) {
+            for (let i = 0; i < menuOptions.length; i++) {
+                menuOptions[i].innerText = translation.en.menu[i];
+                sectionTitles[i].innerText = translation.en.menu[i];
+            };
+            aboutUs.innerHTML = translation.en.about;
+            for (let i = 0; i < concertTexts.length; i++) {
+                concertTexts[i].innerText = translation.en.concert[i];
+            };
+        } else {
+            await handleStoriesTranslation('en');
         };
     };
 
@@ -253,7 +269,6 @@ languageIcons.forEach((icon) => {
         setTranslation(icon);
     });
 });
-
 
 // Instagram Icon Hover
 
@@ -329,16 +344,20 @@ instagramIcon.addEventListener('mouseleave', () => {
 // Parallax 
 
 const storiesSection = document.getElementById('stories');
-const aboutUsSection = document.getElementById('about-us');
 
-const handleParallax = () => {
-    const offset = window.scrollY;
+if (document.location.pathname.includes("index.html")) {
+    const storiesSection = document.getElementById('stories');
+    const aboutUsSection = document.getElementById('about-us');
 
-    storiesSection.style.backgroundPositionY = -300 + offset * 0.7 + "px";
-    aboutUsSection.style.backgroundPositionY = 500 + offset * 0.7 + "px";
-}
+    const handleParallax = () => {
+        const offset = window.scrollY;
 
-window.addEventListener('scroll', handleParallax);
+        storiesSection.style.backgroundPositionY = -300 + offset * 0.7 + "px";
+        aboutUsSection.style.backgroundPositionY = 500 + offset * 0.7 + "px";
+    }
+
+    window.addEventListener('scroll', handleParallax);
+};
 
 // Stories Movement
 
@@ -474,12 +493,15 @@ const fetchSheetData = async () => {
                 country: cells[4]?.innerText || 'N/A'
             };
         });
+        console.log(concerts)
         return concerts;
     } catch (error) {
         console.log('Error fetching sheet data', error);
         return [];
     }
 };
+
+fetchSheetData()
 
 const sortDates = async () => {
     await fetchSheetData();
@@ -610,35 +632,90 @@ const fullScreenContainer = document.getElementById('fullscreen-container');
 const overlayBody = document.getElementById('overlay-body');
 const scrollLeft = document.getElementById('scroll-left');
 const scrollRight = document.getElementById('scroll-right');
+const fastForward = document.getElementById('fast-forward');
+const fastBackward = document.getElementById('fast-backward');
 
+let isFastOn = false;
+let selectedImage = null;
 let isFullscreen = false;
 
+const handleFast = (event) => {
+    if (!isFastOn) {
+        if (event.currentTarget === fastForward) {
+            isFastOn = true;
+            fastForward.children[0].style.fill = 'var(--pink)';
+        };
+    }
+    else if (isFastOn) {
+        if (event.currentTarget === fastForward) {
+            isFastOn = false;
+            fastForward.children[0].style.fill = 'var(--blue-gray)';
+        }
+    };
+};
+
+fastForward.addEventListener('mousedown', handleFast);
+fastForward.addEventListener('mouseup', handleFast);
+
 const displayFullscreen = (event) => {
-    const selectedImage = event.target;
+    selectedImage = event.currentTarget;
+
     if (!isFullscreen) {
-        fullScreenContainer.children[1].children[0].src = selectedImage.src;
+        fullScreenContainer.children[1].children[0].src = selectedImage.children[0].src;
         fullScreenContainer.classList.add('fullscreen');
-        //overlayBody.classList.add('show-overlay');
+        overlayBody.classList.add('show-overlay');
         isFullscreen = true;
     };
+
+    const handleScroll = (e) => {//try with currentIndex, newIndex instead
+        let newImage, newIndex;
+        let currentIndex = images.indexOf(selectedImage);
+
+        if (e.target === scrollLeft) {
+            if (currentIndex === 0) {
+                newIndex = images.length - 1;
+            } else {
+                newIndex = (currentIndex - 1 + images.length) % (images.length);
+            };
+        } else if (e.target === scrollRight) {
+            if (currentIndex === images.length - 1) {
+                newIndex = 0;
+            } else {
+                newIndex = (currentIndex + 1) % (images.length);
+            };
+        };
+        newImage = images[newIndex];
+        selectedImage = newImage;
+        fullScreenContainer.children[1].children[0].src = selectedImage.children[0].src;
+    };
+
+    scrollLeft.addEventListener('click', handleScroll);
+    scrollLeft.addEventListener('mouseenter', () => {
+        fullScreenContainer.removeEventListener('click', hideFullscreen)
+    });
+    scrollLeft.addEventListener('mouseleave', () => {
+        fullScreenContainer.addEventListener('click', hideFullscreen)
+    });
+
+    scrollRight.addEventListener('click', handleScroll);
+    scrollRight.addEventListener('mouseenter', () => {
+        fullScreenContainer.removeEventListener('click', hideFullscreen)
+    });
+    scrollRight.addEventListener('mouseleave', () => {
+        fullScreenContainer.addEventListener('click', hideFullscreen)
+    });
 };
 
 const hideFullscreen = () => {
     if (isFullscreen) {
         fullScreenContainer.src = '';
         fullScreenContainer.classList.remove('fullscreen');
-        //overlayBody.classList.remove('show-overlay');
+        overlayBody.classList.remove('show-overlay');
         isFullscreen = false;
     };
 };
 
-const handleScroll = (event) => {
-    if (event.target === scrollLeft) {
-        console.log('left');
-    } else if (event.target === scrollRight) {
-        console.log('right');
-    };
-};
+
 
 images.forEach(image => {
     image.addEventListener('click', displayFullscreen)
@@ -646,20 +723,7 @@ images.forEach(image => {
 
 fullScreenContainer.addEventListener('click', hideFullscreen);
 
-scrollLeft.addEventListener('click', handleScroll);
-scrollLeft.addEventListener('mouseenter', () => {
-    fullScreenContainer.removeEventListener('click', hideFullscreen)
-});
-scrollLeft.addEventListener('mouseleave', () => {
-    fullScreenContainer.addEventListener('click', hideFullscreen)
-});
-scrollRight.addEventListener('click', handleScroll);
-scrollRight.addEventListener('mouseenter', () => {
-    fullScreenContainer.removeEventListener('click', hideFullscreen)
-});
-scrollRight.addEventListener('mouseleave', () => {
-    fullScreenContainer.addEventListener('click', hideFullscreen)
-});
+
 
 // Stories 
 
