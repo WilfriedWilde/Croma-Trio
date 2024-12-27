@@ -353,7 +353,7 @@ if (document.location.pathname.includes("index.html")) {
         const offset = window.scrollY;
 
         storiesSection.style.backgroundPositionY = -300 + offset * 0.7 + "px";
-        aboutUsSection.style.backgroundPositionY = 500 + offset * 0.7 + "px";
+        aboutUsSection.style.backgroundPositionY = offset * 0.7 + "px";
     }
 
     window.addEventListener('scroll', handleParallax);
@@ -627,35 +627,72 @@ concertsLists.forEach((list) => {
 
 // Gallery 
 
+const gallery = document.querySelector('.gallery');
 const images = Array.from(document.querySelectorAll('.image'));
 const fullScreenContainer = document.getElementById('fullscreen-container');
 const overlayBody = document.getElementById('overlay-body');
 const scrollLeft = document.getElementById('scroll-left');
 const scrollRight = document.getElementById('scroll-right');
-const fastForward = document.getElementById('fast-forward');
-const fastBackward = document.getElementById('fast-backward');
+const galleryBtns = Array.from(document.querySelectorAll('.gallery-btn'));
 
 let isFastOn = false;
+let isGalleryBtnHovered = false;
 let selectedImage = null;
 let isFullscreen = false;
 
+const handleHover = (event) => {
+    const btn = event.currentTarget;
+
+    if (!isGalleryBtnHovered) {
+        isGalleryBtnHovered = true;
+        if (btn.id === 'fast-forward') {
+            btn.children[0].style.fill = 'var(--blue-gray)';
+            btn.children[0].style.cursor = 'pointer';
+        } else if (btn.id === 'fast-backward') {
+            btn.children[0].style.fill = 'var(--blue-gray)';
+            btn.children[0].style.cursor = 'pointer';
+        };
+    } else {
+        isGalleryBtnHovered = false;
+        if (btn.id === 'fast-forward') {
+            btn.children[0].style.fill = 'black';
+        } else if (btn.id === 'fast-backward') {
+            btn.children[0].style.fill = 'black';
+        };
+    }
+}
+
 const handleFast = (event) => {
+    const btn = event.currentTarget;
+
     if (!isFastOn) {
-        if (event.currentTarget === fastForward) {
+        if (btn.id === 'fast-forward') {
             isFastOn = true;
-            fastForward.children[0].style.fill = 'var(--pink)';
+            btn.children[0].style.fill = 'var(--pink)';
+            images.forEach(image => {
+                image.style.animation = 'scroll 60s linear infinite';
+                image.style.animationDelay = 'calc((60s / var(--quantity)) * (var(--position) - 1))';
+            })
         };
     }
     else if (isFastOn) {
-        if (event.currentTarget === fastForward) {
+        if (btn.id === 'fast-forward') {
             isFastOn = false;
-            fastForward.children[0].style.fill = 'var(--blue-gray)';
+            btn.children[0].style.fill = 'var(--blue-gray)';
+            images.forEach((image, i) => {
+                image.style.animation = 'scroll 300s linear infinite';
+                image.style.animationDelay = 'calc((300s / var(--quantity)) * (var(--position) - 1))';
+            })
         }
     };
 };
 
-fastForward.addEventListener('mousedown', handleFast);
-fastForward.addEventListener('mouseup', handleFast);
+galleryBtns.forEach(btn => {
+    btn.addEventListener('mousedown', handleFast);
+    btn.addEventListener('mouseup', handleFast);
+    btn.addEventListener('mouseover', handleHover);
+    btn.addEventListener('mouseout', handleHover);
+});
 
 const displayFullscreen = (event) => {
     selectedImage = event.currentTarget;

@@ -496,8 +496,8 @@ body {
 /* ABOUT US */
 
 #about-us {
-  background: url(images/recording/17.jpg);
-  background-size: cover;
+  background: url(images/promo/1.jpg);
+  background-size: 100%;
   color: white;
   position: relative;
   gap: 100px;
@@ -802,11 +802,6 @@ body {
   height: 100%;
   fill: black;
   transition: all 0.3s ease;
-}
-
-.gallery-btn svg:hover {
-  fill: var(--blue-gray);
-  cursor: pointer;
 }
 
 #fast-backward {
