@@ -648,7 +648,7 @@ const handleHover = (event) => {
         if (btn.id === 'fast-forward') {
             btn.children[0].style.fill = 'var(--blue-gray)';
             btn.children[0].style.cursor = 'pointer';
-        } else if (btn.id === 'fast-backward') {
+        } else {
             btn.children[0].style.fill = 'var(--blue-gray)';
             btn.children[0].style.cursor = 'pointer';
         };
@@ -656,11 +656,11 @@ const handleHover = (event) => {
         isGalleryBtnHovered = false;
         if (btn.id === 'fast-forward') {
             btn.children[0].style.fill = 'black';
-        } else if (btn.id === 'fast-backward') {
+        } else {
             btn.children[0].style.fill = 'black';
         };
     }
-}
+};
 
 const handleFast = (event) => {
     const btn = event.currentTarget;
@@ -670,22 +670,38 @@ const handleFast = (event) => {
             isFastOn = true;
             btn.children[0].style.fill = 'var(--pink)';
             images.forEach(image => {
-                image.style.animation = 'scroll 60s linear infinite';
+                const style = getComputedStyle(image);
+                image.style.animationDuration = '60s';
                 image.style.animationDelay = 'calc((60s / var(--quantity)) * (var(--position) - 1))';
-            })
+            });
+        } else {
+            isFastOn = true;
+            btn.children[0].style.fill = 'var(--pink)';
+            images.forEach(image => {
+                image.style.left = '-100%';
+                image.style.animation = 'scroll 60s linear reverse infinite';
+                image.style.animationDelay = 'calc((60s / var(--quantity)) * (var(--position) - 1))';
+            });
         };
-    }
-    else if (isFastOn) {
+    } else if (isFastOn) {
         if (btn.id === 'fast-forward') {
             isFastOn = false;
             btn.children[0].style.fill = 'var(--blue-gray)';
             images.forEach((image, i) => {
                 image.style.animation = 'scroll 300s linear infinite';
                 image.style.animationDelay = 'calc((300s / var(--quantity)) * (var(--position) - 1))';
+            });
+        } else {
+            isFastOn = false;
+            btn.children[0].style.fill = 'var(--blue-gray)';
+            images.forEach((image, i) => {
+                image.style.animation = 'scroll 300s linear infinite';
+                image.style.animationDelay = 'calc((300s / var(--quantity)) * (var(--position) - 1))';
             })
-        }
+        };
     };
 };
+
 
 galleryBtns.forEach(btn => {
     btn.addEventListener('mousedown', handleFast);
@@ -704,7 +720,7 @@ const displayFullscreen = (event) => {
         isFullscreen = true;
     };
 
-    const handleScroll = (e) => {//try with currentIndex, newIndex instead
+    const handleScroll = (e) => {
         let newImage, newIndex;
         let currentIndex = images.indexOf(selectedImage);
 

@@ -429,6 +429,11 @@ body {
 
 #music {
   background-color: var(--light-pink);
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
 }
 
 #music a {
@@ -845,7 +850,6 @@ body {
 }
 
 .slider:hover .image {
-  animation-play-state: paused;
   filter: grayscale(1) blur(2px);
   cursor: pointer;
 }
