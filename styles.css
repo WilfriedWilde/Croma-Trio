@@ -6,13 +6,11 @@
 }
 
 @font-face {
-  font-family: "GDT";
-  src: url("fonts/GDT.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Himalaya";
-  src: url("fonts/himalaya.ttf") format("truetype");
+  font-family: 'Bahnschrift';
+  src: url('fonts/bahnschrift.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal italic;
+  font-stretch: 50% 200%;
 }
 
 :root {
@@ -25,8 +23,8 @@
   --pink: #d7959f;
   --light-pink: #cfbcc0;
   --blue: hsl(201 100% 50%);
-  --title: "GDT", sans-serif;
-  --main: "Himalaya", serif;
+  --title: "Bahnschrift", sans-serif;
+  --main: "Bahnschrift", serif;
 }
 
 html {
@@ -37,6 +35,7 @@ html {
 
 body {
   font-family: var(--main);
+  font-stretch: 75%;
   position: relative;
 }
 
@@ -93,15 +92,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   grid-area: logo;
   justify-self: center;
   align-self: center;
   color: black;
-  padding: 8px;
-  border-radius: 50%;
-  border: 0px dotted var(--pink);
   transition: all 0.3s ease;
 }
 
@@ -113,8 +109,6 @@ body {
   height: 100%;
   background-color: transparent;
   transition: all 0.3s ease;
-  border-radius: 50%;
-  padding: 7px;
 }
 
 .home {
@@ -124,11 +118,6 @@ body {
 .home path {
   fill: rgba(0, 0, 0, 0.379);
   transition: all 0.3s ease;
-}
-
-#logo-container:hover {
-  cursor: pointer;
-  border: 5px dotted var(--pink);
 }
 
 #logo-container:hover .home path {
@@ -146,14 +135,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 300;
   z-index: 5;
   text-transform: uppercase;
 }
 
 .bold-text {
-  font-size: 28px;
+  font-size: 25px;
   font-weight: 800;
 }
 
@@ -162,18 +151,20 @@ body {
   grid-template-columns: repeat(7, 1fr);
   align-items: center;
   gap: 20px;
-  font-size: 35px;
+  font-size: 25px;
   font-weight: 300;
   text-align: center;
   grid-area: link;
-  align-self: center;
-  letter-spacing: 3px;
+  align-self: end;
+  text-transform: uppercase;
+  position: relative;
+  transform: translateY(-15px);
 }
 
 .list-item {
   display: flex;
   justify-content: space-evenly;
-  line-height: 0.7;
+  line-height: 1;
 }
 
 #stories-navbar-list {
@@ -839,7 +830,6 @@ body {
   left: 100%;
   animation: scroll 300s linear infinite;
   animation-delay: calc((300s / var(--quantity)) * (var(--position) - 1));
-  transition: all 0.3s ease;
 }
 
 .slider .gallery .image img {

@@ -45,6 +45,7 @@ const menuOptions = document.querySelectorAll('.menu-option');
 const sectionTitles = document.querySelectorAll('.section-title');
 const aboutUs = document.getElementById('about-us-text');
 const concertTexts = document.querySelectorAll('.concert-text');
+const stories = document.querySelectorAll('.story-link');
 const storyContainer = document.querySelector('.story-container');
 const storyTitle = document.querySelector('.story-title');
 const storyContent = document.querySelector('.story-content');
@@ -90,6 +91,7 @@ handleStoriesTranslation('es');
 const translation = {
     ca: {
         menu: ["vídeo", "música", "relats", "sobre nosaltres", "concerts", "galeria", "contacte"],
+        story: ["L'Ampolla", "Triàfobia", "Fum", "Uns Segons De Silenci"],
         about: `<div class="small-text scroll-text left">
                     <div>
                         Cromo -Croma
@@ -115,6 +117,7 @@ const translation = {
     },
     es: {
         menu: ["vídeo", "música", "relatos", "sobre nosotros", "conciertos", "galería", "contacto"],
+        story: ["L'Ampolla", "Triàfobia", "Humo", "Uns Segons De Silenci"],
         about: `<div class="small-text scroll-text left">
                     <div>
                         Cromo -Croma
@@ -152,6 +155,7 @@ const translation = {
     },
     en: {
         menu: ["video", "music", "stories", "about us", "concerts", "gallery", "contact"],
+        story: ["L'Ampolla", "Triàfobia", "Smoke", "Uns Segons De Silenci"],
         about: `<div class="small-text scroll-text left">
                     <div>
                         Cromo -Croma
@@ -189,10 +193,13 @@ const setTranslation = async (language) => {
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
 
-        if (document.location.pathname.includes('index.hmtl')) {
+        if (document.location.pathname.includes('index.html')) {
             for (let i = 0; i < menuOptions.length; i++) {
                 menuOptions[i].innerText = translation.ca.menu[i];
                 sectionTitles[i].innerText = translation.ca.menu[i];
+            };
+            for (let i = 0; i < stories.length; i++) {
+                stories[i].innerText = translation.ca.story[i];
             };
             aboutUs.innerHTML = translation.ca.about;
             for (let i = 0; i < concertTexts.length; i++) {
@@ -208,10 +215,13 @@ const setTranslation = async (language) => {
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
 
-        if (document.location.pathname.includes('index.hmtl')) {
+        if (document.location.pathname.includes('index.html')) {
             for (let i = 0; i < menuOptions.length; i++) {
                 menuOptions[i].innerText = translation.es.menu[i];
                 sectionTitles[i].innerText = translation.es.menu[i];
+            };
+            for (let i = 0; i < stories.length; i++) {
+                stories[i].innerText = translation.es.story[i];
             };
             aboutUs.innerHTML = translation.es.about;
             for (let i = 0; i < concertTexts.length; i++) {
@@ -227,10 +237,13 @@ const setTranslation = async (language) => {
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
 
-        if (document.location.pathname.includes('index.hmtl')) {
+        if (document.location.pathname.includes('index.html')) {
             for (let i = 0; i < menuOptions.length; i++) {
                 menuOptions[i].innerText = translation.en.menu[i];
                 sectionTitles[i].innerText = translation.en.menu[i];
+            };
+            for (let i = 0; i < stories.length; i++) {
+                stories[i].innerText = translation.en.story[i];
             };
             aboutUs.innerHTML = translation.en.about;
             for (let i = 0; i < concertTexts.length; i++) {
@@ -352,16 +365,14 @@ if (document.location.pathname.includes("index.html")) {
     const handleParallax = () => {
         const offset = window.scrollY;
 
-        storiesSection.style.backgroundPositionY = -300 + offset * 0.7 + "px";
-        aboutUsSection.style.backgroundPositionY = offset * 0.7 + "px";
+        storiesSection.style.backgroundPositionY = 700 + offset * 0.7 + "px";
+        aboutUsSection.style.backgroundPositionY = 600 + offset * 0.7 + "px";
     }
 
     window.addEventListener('scroll', handleParallax);
 };
 
 // Stories Movement
-
-const stories = document.querySelectorAll('.story-link');
 
 let isMoving = true;
 
@@ -628,6 +639,7 @@ concertsLists.forEach((list) => {
 // Gallery 
 
 const gallery = document.querySelector('.gallery');
+const slider = document.querySelector('.slider');
 const images = Array.from(document.querySelectorAll('.image'));
 const fullScreenContainer = document.getElementById('fullscreen-container');
 const overlayBody = document.getElementById('overlay-body');
@@ -662,18 +674,30 @@ const handleHover = (event) => {
     }
 };
 
-const handleFast = (event) => {
+const imageWidth = slider.style.getPropertyValue('--width').slice(0, -2);
+const quantity = slider.style.getPropertyValue('--quantity');
+const initialLeft = images[0].getBoundingClientRect().left;
+
+let startClick, endClick;
+let animationDuration = 300;
+let imagesCounter = 0;
+
+// on dirait que ça marche. Il faut que je rajoute une condition pour appliquer l'elapsedistance uniquement aux images qui ont un left différent à left 100% (en gros juste les images qui ont commencé à bouger)
+/*const changeSpeed = (event) => {
     const btn = event.currentTarget;
 
     if (!isFastOn) {
         if (btn.id === 'fast-forward') {
+            startClick = Date.now();
+            currentLeft = [];
             isFastOn = true;
+
             btn.children[0].style.fill = 'var(--pink)';
             images.forEach(image => {
-                const style = getComputedStyle(image);
-                image.style.animationDuration = '60s';
-                image.style.animationDelay = 'calc((60s / var(--quantity)) * (var(--position) - 1))';
+                image.style.animationDuration = `${animationDuration / 5}s`;
+                image.style.animationDelay = `calc((${animationDuration / 5}s / var(--quantity)) * (var(--position) - 1))`;
             });
+            console.log(currentLeft)
         } else {
             isFastOn = true;
             btn.children[0].style.fill = 'var(--pink)';
@@ -685,27 +709,103 @@ const handleFast = (event) => {
         };
     } else if (isFastOn) {
         if (btn.id === 'fast-forward') {
+            imagesCounter = 0;
+            endClick = Date.now();
+            const elapsedTime = (endClick - startClick) / 1000;
+            const elapsedDistance = `${(imageWidth / (((animationDuration / 5) / quantity) / elapsedTime))}`;
+
+            console.log(elapsedDistance);
+
             isFastOn = false;
+
             btn.children[0].style.fill = 'var(--blue-gray)';
             images.forEach((image, i) => {
-                image.style.animation = 'scroll 300s linear infinite';
-                image.style.animationDelay = 'calc((300s / var(--quantity)) * (var(--position) - 1))';
+                if (image.getBoundingClientRect().left !== initialLeft) {
+                    imagesCounter = image.style.getPropertyValue('--position');
+                    console.log(image)
+                    images[i].style.transform = `translateX(${(elapsedDistance * -5) * i}px)`;
+                };
+                console.log(imagesCounter)
+                image.style.animation = `scroll ${animationDuration - elapsedTime}s linear infinite`;
+                image.style.animationDelay = `calc((${animationDuration - elapsedTime}s / var(--quantity) - ${imagesCounter}) * (var(--position) - ${imagesCounter + 1}))`
             });
         } else {
             isFastOn = false;
             btn.children[0].style.fill = 'var(--blue-gray)';
             images.forEach((image, i) => {
-                image.style.animation = 'scroll 300s linear infinite';
+                image.style.animation = `scroll ${animationDuration}s linear infinite`;
                 image.style.animationDelay = 'calc((300s / var(--quantity)) * (var(--position) - 1))';
             })
         };
     };
+};*/
+
+const changeSpeed = (event) => {
+    const btn = event.currentTarget;
+    const isFastMode = !isFastOn;
+    const now = Date.now();
+
+    if (isFastMode) {
+        // Enable fast mode
+        startClick = now;
+        isFastOn = true;
+        btn.children[0].style.fill = 'var(--pink)';
+
+        images.forEach((image, i) => {
+            const rect = image.getBoundingClientRect();
+            const distanceMoved = rect.left - initialLeft;
+
+            console.log(`Image ${i}: Distance Moved in Fast Mode: ${distanceMoved}px`);
+
+            // Stop current animation and apply transform
+            image.style.animation = 'none';
+            image.style.transform = `translateX(${distanceMoved}px)`;
+
+            // Restart animation with faster speed
+            setTimeout(() => {
+                const adjustedDelay = `calc((${animationDuration / 5}s / var(--quantity)) * (var(--position) - 1))`;
+                image.style.animation = `scroll ${animationDuration / 5}s linear infinite`;
+                image.style.animationDelay = adjustedDelay;
+
+                console.log(`Image ${i}: Fast Mode Animation Applied`);
+            }, 0);
+        });
+
+    } else {
+        // Disable fast mode
+        endClick = now;
+        const elapsedTime = (endClick - startClick) / 1000; // Seconds
+        isFastOn = false;
+        btn.children[0].style.fill = 'var(--blue-gray)';
+
+        images.forEach((image, i) => {
+            const rect = image.getBoundingClientRect();
+            const distanceMoved = rect.left - initialLeft;
+
+            console.log(`Image ${i}: Distance Moved in Normal Mode: ${distanceMoved}px`);
+
+            // Stop animation and apply transform
+            image.style.animation = 'none';
+            image.style.transform = `translateX(${distanceMoved}px)`;
+
+            // Restart animation with normal speed
+            setTimeout(() => {
+                const adjustedDelay = `calc((${animationDuration}s / var(--quantity)) * (var(--position) - 1))`;
+                image.style.animation = `scroll ${animationDuration}s linear infinite`;
+                image.style.animationDelay = adjustedDelay;
+
+                console.log(`Image ${i}: Normal Mode Animation Applied`);
+            }, 0);
+        });
+    }
 };
 
 
+
+
 galleryBtns.forEach(btn => {
-    btn.addEventListener('mousedown', handleFast);
-    btn.addEventListener('mouseup', handleFast);
+    btn.addEventListener('mousedown', changeSpeed);
+    btn.addEventListener('mouseup', changeSpeed);
     btn.addEventListener('mouseover', handleHover);
     btn.addEventListener('mouseout', handleHover);
 });
