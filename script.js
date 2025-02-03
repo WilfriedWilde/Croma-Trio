@@ -1,6 +1,6 @@
 const isIndexPage = () => {
     return !["/l'ampolla.html", "/triafobia.html", "/fum.html", "/uns_segons_de_silenci.html"]
-        .some(pathname => pathname === document.location.pathname);
+        .some(pathname => document.location.pathname.includes(pathname));
 };
 const stories = document.querySelectorAll('.story-link');
 
