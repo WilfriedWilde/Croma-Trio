@@ -439,28 +439,6 @@ if (isIndexPage()) {
     checkImg(firstImage);
     checkImg(lastImage);
 
-    const handleHover = (event) => {
-        const btn = event.currentTarget;
-
-        if (!isGalleryBtnHovered) {
-            isGalleryBtnHovered = true;
-            if (btn.id === 'fast-forward') {
-                btn.children[0].style.fill = 'var(--blue-gray)';
-                btn.children[0].style.cursor = 'pointer';
-            } else {
-                btn.children[0].style.fill = 'var(--blue-gray)';
-                btn.children[0].style.cursor = 'pointer';
-            };
-        } else {
-            isGalleryBtnHovered = false;
-            if (btn.id === 'fast-forward') {
-                btn.children[0].style.fill = 'black';
-            } else {
-                btn.children[0].style.fill = 'black';
-            };
-        }
-    };
-
     const displayFullscreen = (event) => {
         selectedImage = event.currentTarget;
 
