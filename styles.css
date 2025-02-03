@@ -417,7 +417,7 @@ body {
 }
 
 #main-logo {
-  width: 150%;
+  width: 400px;
   object-fit: contain;
   filter: invert(1);
 }
@@ -554,16 +554,6 @@ body {
 }
 
 /* STORIES */
-
-/* #stories {
-  height: 100vh;
-  background: url(images/cloud.png);
-  background-position: center;
-  background-size: 150%;
-  gap: 100px;
-  position: relative;
-  overflow: hidden;
-} */
 
 #stories {
   height: 150vh;
