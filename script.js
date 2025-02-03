@@ -1,3 +1,5 @@
+const stories = document.querySelectorAll('.story-link');
+
 // Navbar Display 
 
 const navbar = document.getElementById('navbar');
@@ -26,8 +28,12 @@ const scrollTexts = document.querySelectorAll('.scroll-text')
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-        entry.target.classList.toggle('show', entry.isIntersecting);
-        entry.target.getBoundingClientRect();
+        if (entry.target.classList.contains('story-link')) {
+            entry.target.classList.toggle('show-story', entry.isIntersecting);
+        } else {
+            entry.target.classList.toggle('show', entry.isIntersecting);
+            entry.target.getBoundingClientRect();
+        }
     }),
     {
         threshold: 1
@@ -36,251 +42,6 @@ const observer = new IntersectionObserver((entries) => {
 
 scrollTexts.forEach((text) => {
     observer.observe(text)
-})
-
-// Translation 
-
-const textToTranslate = document.querySelectorAll('.text');
-const menuOptions = document.querySelectorAll('.menu-option');
-const sectionTitles = document.querySelectorAll('.section-title');
-const aboutUs = document.getElementById('about-us-text');
-const concertTexts = document.querySelectorAll('.concert-text');
-const stories = document.querySelectorAll('.story-link');
-const storyContainer = document.querySelector('.story-container');
-const storyTitle = document.querySelector('.story-title');
-const storyContent = document.querySelector('.story-content');
-const menuStories = Array.from(document.querySelectorAll('.menu-story'));
-
-const handleStoriesTranslation = async (lang) => {
-    const response = await fetch('stories.json');
-    const translations = await response.json();
-
-    const appendTranslations = (lang, titleIndex, textTitle) => {
-        storyContent.innerHTML = '';
-        storyTitle.innerHTML = '';
-
-        const title = translations[lang].title[titleIndex];
-        const content = translations[lang].text[textTitle];
-
-        storyTitle.innerHTML = title;
-        content.forEach((paragraph) => {
-            const p = document.createElement('p');
-            p.innerText = paragraph;
-            p.classList.add('story-text', 'text');
-            storyContent.appendChild(p);
-        });
-    };
-
-    if (document.location.pathname.includes("l'ampolla.html")) {
-        appendTranslations(lang, 0, 'lampolla');
-    } else if (document.location.pathname.includes("triafobia.html")) {
-        appendTranslations(lang, 1, 'triafobia');
-    } else if (document.location.pathname.includes("fum.html")) {
-        appendTranslations(lang, 2, 'fum');
-    } else if (document.location.pathname.includes("uns_segons_de_silenci.html")) {
-        appendTranslations(lang, 3, 'silenci');
-    };
-
-    for (let i = 0; i < menuStories.length; i++) {
-        menuStories[i].innerText = translations[lang].title[i];
-    };
-};
-
-handleStoriesTranslation('es');
-
-const translation = {
-    ca: {
-        menu: ["vídeo", "música", "relats", "sobre nosaltres", "concerts", "galeria", "contacte"],
-        story: ["L'Ampolla", "Triàfobia", "Fum", "Uns Segons De Silenci"],
-        about: `<div class="small-text scroll-text left">
-                    <div>
-                        Cromo -Croma
-                    </div>
-                    <div>
-                        [LC] Forma sufixada del terme grec <span class='italic'>khrôma</span>, 'color'. (DIEC2)
-                    </div>
-                </div>
-                <p class="scroll-text right">
-                    Croma és la meva realitat distorsionada, allò que em van dir que mai veuria com els altres. La meva condició de daltònic sempre m’ha provocat una fascinació diferent pels colors.
-                </p>
-                <p class="scroll-text left">
-                    Croma és un projecte en trio que es mou entre el jazz contemporani i la literatura. La idiosincràsia del projecte es basa en la composició inspirada en diversos microrelats escrits per Guillem Salles, que transiten entre la ficció distòpica i el costumisme.
-                </p>
-                <p class="scroll-text right">
-                    ‘Cambra Blanca’ <span class='italic'>(AMP Music & Records)</span> és el primer treball de la formació, un disc argumental i també descriptiu, enèrgic i emocional. El disc és una fotografia sonora de la música acústica del trio amb petites pinzellades de postproducció. 4 suites per a 4 relats breus.
-                    Cada tema està inspirat en una història fictícia, en un personatge o en una societat que perceben la realitat distorsionada d’alguna manera.
-                </p>
-                <p class="scroll-text left">
-                    Igual que jo, i igual que tots.
-                </p>`,
-        concert: ["avui", "passats", "propers", "no hi ha concerts programats"]
-    },
-    es: {
-        menu: ["vídeo", "música", "relatos", "sobre nosotros", "conciertos", "galería", "contacto"],
-        story: ["L'Ampolla", "Triàfobia", "Humo", "Uns Segons De Silenci"],
-        about: `<div class="small-text scroll-text left">
-                    <div>
-                        Cromo -Croma
-                    </div>
-                    <div>
-                        [LC] Forma sufijada del término griego <span class='italic'>khrôma</span>, 'color'.
-                        (DIEC2)
-                    </div>
-                </div>
-                <p class="scroll-text right">
-                    Croma es mi realidad distorsionada, aquello que me dijeron que nunca vería
-                    como los
-                    demás. Mi condición de daltónico siempre me ha provocado una fascinación diferente
-                    por los colores.
-                </p>
-                <p class="scroll-text left">
-                    Croma es un proyecto en trío que se mueve entre el jazz contemporáneo y la
-                    literatura.
-                    La idiosincrasia del proyecto se basa en la composición inspirada en diversos
-                    microrrelatos escritos por Guillem Salles, los cuales transitan entre la ficción distópica y
-                    el costumbrismo.
-                </p>
-                <p class="scroll-text right">
-                    ‘Cambra Blanca’ <span class='italic'>(AMP Music & Records)</span> es el
-                    primer trabajo de la formación, un
-                    disco argumental y también descriptivo, enérgico y emocional. El disco es una
-                    fotografía sonora de la música acústica del trío con pequeñas pinceladas de
-                    postproducción. 4 suites para 4 relatos breves. Cada tema está inspirado en una historia ficticia, en un
-                    personaje o en una sociedad que perciben la realidad distorsionada de alguna manera.
-                </p>
-                <p class="scroll-text left">
-                    Igual que yo, e igual que todos.
-                </p>`,
-        concert: ["hoy", "pasados", "próximos", "no hay conciertos programados"]
-    },
-    en: {
-        menu: ["video", "music", "stories", "about us", "concerts", "gallery", "contact"],
-        story: ["L'Ampolla", "Triàfobia", "Smoke", "Uns Segons De Silenci"],
-        about: `<div class="small-text scroll-text left">
-                    <div>
-                        Cromo -Croma
-                    </div>
-                    <div>
-                        [LC] Suffix form of the Greek term khrôma, 'color'. (DIEC2) (DIEC2)
-                    </div>
-                </div>
-                <p class="scroll-text right">
-                    Croma is my distorted reality, what they told me I would never see like others do. My condition as a colorblind person has always given me a different fascination with colors.
-                </p>
-                <p class="scroll-text left">
-                    Croma is a trio project that moves between contemporary jazz and literature. The idiosyncrasy of the project is based on compositions inspired by various micro-stories written by Guillem Salles, which range from dystopian fiction to everyday realism.
-                </p>
-                <p class="scroll-text right">
-                    ‘Cambra Blanca’ <span class='italic'>(AMP Music & Records)</span> is the first work by the group, a conceptual and descriptive album, energetic and emotional. The album is a sonic photograph of the trio's acoustic music with small touches of post-production. 4 suites for 4 short stories.
-                    Each track is inspired by a fictional story, a character, or a society that perceives reality in a distorted way.
-                </p>
-                <p class="scroll-text left">
-                    Just like me, and just like everyone else.
-                </p>`,
-        concert: ["today", "past", "upcoming", "no concerts scheduled"]
-    }
-};
-
-const setTranslation = async (language) => {
-    scrollTexts.forEach((text) => {
-        observer.unobserve(text)
-    });
-
-    if (language === languageIcons[0]) {
-        for (let i = 0; i < textToTranslate.length; i++) {
-            textToTranslate[i].style.animation = '';
-            textToTranslate[i].offsetHeight;
-            textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
-        };
-
-        if (document.location.pathname.includes('index.html')) {
-            for (let i = 0; i < menuOptions.length; i++) {
-                menuOptions[i].innerText = translation.ca.menu[i];
-                sectionTitles[i].innerText = translation.ca.menu[i];
-            };
-            for (let i = 0; i < stories.length; i++) {
-                stories[i].innerText = translation.ca.story[i];
-            };
-            aboutUs.innerHTML = translation.ca.about;
-            for (let i = 0; i < concertTexts.length; i++) {
-                concertTexts[i].innerText = translation.ca.concert[i];
-            };
-        } else {
-            await handleStoriesTranslation('ca');
-        };
-    } else if (language === languageIcons[1]) {
-        for (let i = 0; i < textToTranslate.length; i++) {
-            textToTranslate[i].style.animation = '';
-            textToTranslate[i].offsetHeight;
-            textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
-        };
-
-        if (document.location.pathname.includes('index.html')) {
-            for (let i = 0; i < menuOptions.length; i++) {
-                menuOptions[i].innerText = translation.es.menu[i];
-                sectionTitles[i].innerText = translation.es.menu[i];
-            };
-            for (let i = 0; i < stories.length; i++) {
-                stories[i].innerText = translation.es.story[i];
-            };
-            aboutUs.innerHTML = translation.es.about;
-            for (let i = 0; i < concertTexts.length; i++) {
-                concertTexts[i].innerText = translation.es.concert[i];
-            };
-        } else {
-            await handleStoriesTranslation('es');
-        };
-    } else if (language === languageIcons[2]) {
-        for (let i = 0; i < textToTranslate.length; i++) {
-            textToTranslate[i].style.animation = '';
-            textToTranslate[i].offsetHeight;
-            textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
-        };
-
-        if (document.location.pathname.includes('index.html')) {
-            for (let i = 0; i < menuOptions.length; i++) {
-                menuOptions[i].innerText = translation.en.menu[i];
-                sectionTitles[i].innerText = translation.en.menu[i];
-            };
-            for (let i = 0; i < stories.length; i++) {
-                stories[i].innerText = translation.en.story[i];
-            };
-            aboutUs.innerHTML = translation.en.about;
-            for (let i = 0; i < concertTexts.length; i++) {
-                concertTexts[i].innerText = translation.en.concert[i];
-            };
-        } else {
-            await handleStoriesTranslation('en');
-        };
-    };
-
-    const newScrollTexts = document.querySelectorAll('.scroll-text');
-    newScrollTexts.forEach((text) => {
-        observer.observe(text);
-    });
-};
-
-// Language Selection 
-
-const languageIcons = document.querySelectorAll('.language-container');
-
-languageIcons[1].classList.add('bold-text');
-
-const handleLanguageSelection = (icon) => {
-    for (let i = 0; i < languageIcons.length; i++) {
-        if (icon === languageIcons[i]) {
-            languageIcons[i].classList.add('bold-text');
-            languageIcons[(i + 1) % 3].classList.remove('bold-text');
-            languageIcons[(i + 2) % 3].classList.remove('bold-text');
-        };
-    };
-};
-
-languageIcons.forEach((icon) => {
-    icon.addEventListener('click', () => {
-        handleLanguageSelection(icon);
-        setTranslation(icon);
-    });
 });
 
 // Instagram Icon Hover
@@ -372,9 +133,702 @@ if (document.location.pathname.includes("index.html")) {
     window.addEventListener('scroll', handleParallax);
 };
 
+// Concerts 
+
+const concertsLists = document.querySelectorAll('.concerts-list');
+const ucContainer = document.getElementById('uc-container');
+
+let isConcertToday = false;
+let concerts = [];
+let pastConcerts = [];
+let todayConcerts = [];
+let upcomingConcerts = [];
+let years = {
+    past: new Set(),
+    today: new Set(),
+    upcoming: new Set()
+};
+
+const fetchSheetData = async () => {
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAV5kqu-WfugA8JDQj2r7WNAWq4YngYttf69SlZGj7OLDwbJw2isuZO1sFSpLvn76arcQbB8-hVkBK/pubhtml';
+
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const table = doc.querySelector('tbody');
+        const rows = Array.from(table.querySelectorAll('tr')).splice(1);
+
+        concerts = rows.map((row) => {
+            const cells = row.querySelectorAll('td');
+
+            return {
+                date: cells[0]?.innerText || 'N/A',
+                venue: cells[1]?.innerText || 'N/A',
+                venueLink: cells[2]?.innerText || 'N/A',
+                city: cells[3]?.innerText || 'N/A',
+                country: cells[4]?.innerText || 'N/A',
+                ticket: cells[5]?.innerText || 'N/A'
+            };
+        });
+        return concerts;
+    } catch (error) {
+        console.log('Error fetching sheet data', error);
+        return [];
+    }
+};
+
+fetchSheetData()
+
+const sortDates = async () => {
+    await fetchSheetData();
+
+    concerts.forEach((concert) => {
+        concert.date = Number(`${concert.date.split('/').reverse().join('')}`)
+    })
+
+    concerts.sort((a, b) => a.date - b.date);
+
+    concerts.forEach(concert => {
+        concert.date = `${String(concert.date).slice(0, 4)}-${String(concert.date).slice(4, 6)}-${String(concert.date).slice(6, 8)}`;
+    });
+};
+
+const sortConcerts = async () => {
+    await sortDates();
+
+    const today = new Date();
+
+    const formatDate = (object) => {
+        object.date = object.date.split('-').join('');
+        object.year = String(object.date).slice(0, 4);
+        object.date = `${String(object.date).slice(6, 8)}.${String(object.date).slice(4, 6)}`;
+    }
+
+    const handleSorting = (concert, concertsArray, timePeriod) => {
+        formatDate(concert);
+        concertsArray.push(concert);
+        years[timePeriod].add(concert.year);
+    };
+
+    concerts.forEach(concert => {
+        const concertDate = new Date(concert.date);
+
+        if (concertDate.getYear() === today.getYear()
+            && concertDate.getMonth() === today.getMonth()
+            && concertDate.getDate() === today.getDate()) {
+            handleSorting(concert, todayConcerts, 'today');
+
+        } else if (concertDate.toISOString() < today.toISOString()) {
+            handleSorting(concert, pastConcerts, 'past');
+        } else if (concertDate.toISOString() > today.toISOString()) {
+            handleSorting(concert, upcomingConcerts, 'upcoming');
+        }
+    });
+};
+
+const displayConcerts = async () => {
+    await sortConcerts();
+
+    let upcomingConcert;
+
+    const templateUpcomingConcert = (concert) => {
+        return `<div id="uc-location">
+                    <a id="uc-venue" href="${concert.venueLink}">${concert.venue}</a>
+                    <div id="uc-city">${concert.city} (<span id="uc-country">${concert.country}</span>)</div>
+                </div>
+                <div id="uc-date">${concert.date}.${concert.year}</div>`;
+    };
+
+    if (todayConcerts.length) {
+        upcomingConcert = todayConcerts[0];
+        isConcertToday = true;
+        ucContainer.children[0].innerText = 'hoy';
+        ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
+        ucContainer.children[2].href = upcomingConcert.ticket;
+    } else if (upcomingConcerts.length) {
+        upcomingConcert = upcomingConcerts[0];
+        isConcertToday = false;
+        ucContainer.children[0].innerText = 'próximo concierto';
+        ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
+        ucContainer.children[2].href = upcomingConcert.ticket;
+    };
+
+    const templateYear = (year) => {
+        return `<div class="year-container"><div class="year">${year}</div></div>`;
+    };
+    const templateCard = (concert) => {
+        return `<div class="concert-card">
+                    <div class="date">${concert.date}</div>
+                    <div class="venue">
+                        <a class="venue-link" href="${concert.venueLink}">${concert.venue}</a>
+                    </div>
+                    <div class="location-container">
+                        <div class="city">${concert.city}</div>
+                        <div class="country">(<span >${concert.country}</span>)</div>
+                    </div>
+                    <a class="ticket text" href="${concert.ticket}">entradas</a>
+                </div>`;
+    };
+    const templateCardPast = (concert) => {
+        return `<div class="concert-card-past">
+                    <div class="date">${concert.date}</div>
+                    <div class="venue-past">
+                        <a class="venue-link" href="${concert.venueLink}">${concert.venue}</a>
+                    </div>
+                    <div class="location-container">
+                        <div class="city">${concert.city}</div>
+                        <div class="country">(<span >${concert.country}</span>)</div>
+                    </div>
+                </div>`;
+    };
+
+    const appendConcerts = (list, concertsArray, timePeriod) => {
+        list.style.display = 'block';
+
+        if (list.id === "upcoming-concerts") {
+            years[timePeriod].forEach(year => {
+                list.innerHTML += templateYear(year);
+            });
+        } else {
+            years[timePeriod].forEach(year => {
+                list.lastElementChild.innerHTML += templateYear(year);
+            });
+        };
+
+        concertsArray.forEach(concert => {
+            const yearTexts = list.querySelectorAll('.year');
+
+            yearTexts.forEach(yearText => {
+                if (list.id === "upcoming-concerts") {
+                    if (concert.year === yearText.innerText) {
+                        yearText.parentNode.innerHTML += templateCard(concert);
+                    };
+                } else {
+                    if (concert.year === yearText.innerText) {
+                        yearText.parentNode.innerHTML += templateCardPast(concert);
+                    };
+                };
+            });
+        });
+    };
+
+    concertsLists.forEach(list => {
+        if (list.id === "upcoming-concerts") {
+            if (!upcomingConcerts.length) {
+                document.getElementById('no-concert-text').style.display = 'flex';
+            } else {
+                appendConcerts(list, upcomingConcerts, 'upcoming');
+            };
+        } else if (list.id === "past-concerts") {
+            if (!pastConcerts.length) {
+                return;
+            } else {
+                appendConcerts(list, pastConcerts, 'past');
+            };
+        };
+    });
+};
+
+if (document.location.pathname.includes('index.html')) {
+    displayConcerts();
+};
+
+concertsLists.forEach((list) => {
+    if (list.id === "past-concerts") {
+        const name = list.querySelector('.concerts-list-name');
+        const selectors = Array.from(list.querySelectorAll('.concerts-list-selector'));
+        const content = list.querySelector('.concerts-list-content');
+
+        const showConcerts = () => {
+            list.classList.toggle('shadow');
+            selectors.forEach(selector => selector.classList.toggle('time-period-selected'));
+            content.classList.toggle('show-concerts-content');
+        };
+
+        name.addEventListener('click', showConcerts)
+    };
+});
+
+// Gallery 
+
+if (document.location.pathname.includes('index.html')) {
+    
+    const galleryBtns = Array.from(document.querySelectorAll('.gallery-btn'));
+    const slider = document.querySelector('.slider');
+    const gallery = document.querySelector('.gallery');
+    const getImages = () => { return Array.from(document.querySelectorAll('.image')) };
+    const fullScreenContainer = document.getElementById('fullscreen-container');
+    const overlayBody = document.getElementById('overlay-body');
+    const scrollLeft = document.getElementById('scroll-left');
+    const scrollRight = document.getElementById('scroll-right');
+
+    let isGalleryBtnHovered = false;
+    let selectedImage = null;
+    let isFullscreen = false;
+    let imgIndex = 0;
+    let images = getImages();
+    let firstImage, lastImage;
+
+    const imageWidth = images[0].getBoundingClientRect().width;
+
+    firstImage = images[0];
+    lastImage = images[images.length - 1];
+
+    images.forEach((image, i) => {
+        image.style.transform = `translateX(${((imageWidth * i) + imageWidth * imgIndex)}px)`;
+    });
+
+    const scroll = (event) => {
+        const clickedBtn = event.currentTarget;
+
+        if (clickedBtn === galleryBtns[0]) {
+            imgIndex--;
+        } else {
+            imgIndex++;
+        };
+
+        images = getImages();
+
+        images.forEach((image, i) => {
+            image.style.transform = `translateX(${((imageWidth * i) + imageWidth * imgIndex)}px)`;
+        });
+    };
+
+    const checkImg = (img) => {
+        img.addEventListener('transitionend', () => {
+            const imageDim = img.getBoundingClientRect();
+            const sliderDim = slider.getBoundingClientRect();
+
+            if (imageDim.left < sliderDim.left && img === firstImage) {
+                const clone = img.cloneNode(true);
+
+                gallery.appendChild(clone);
+                img.remove();
+                images = getImages();
+
+                images.forEach((image, i) => {
+                    image.style.transform = `translateX(${imageWidth * i}px)`;
+                });
+
+                imgIndex = 0;
+                firstImage = images[0];
+                lastImage = images[images.length - 1];
+            } else if (imageDim.left > sliderDim.right && img === lastImage) {
+                const clone = img.cloneNode(true);
+
+                gallery.prepend(clone);
+                img.remove();
+                images = getImages();
+
+                images.forEach((image, i) => {
+                    image.style.transform = `translateX(${imageWidth * i}px)`;
+                });
+
+                imgIndex = 0;
+                firstImage = images[0];
+                lastImage = images[images.length - 1];
+            }
+        });
+    };
+
+    checkImg(firstImage);
+    checkImg(lastImage);
+
+    const handleHover = (event) => {
+        const btn = event.currentTarget;
+
+        if (!isGalleryBtnHovered) {
+            isGalleryBtnHovered = true;
+            if (btn.id === 'fast-forward') {
+                btn.children[0].style.fill = 'var(--blue-gray)';
+                btn.children[0].style.cursor = 'pointer';
+            } else {
+                btn.children[0].style.fill = 'var(--blue-gray)';
+                btn.children[0].style.cursor = 'pointer';
+            };
+        } else {
+            isGalleryBtnHovered = false;
+            if (btn.id === 'fast-forward') {
+                btn.children[0].style.fill = 'black';
+            } else {
+                btn.children[0].style.fill = 'black';
+            };
+        }
+    };
+
+    const displayFullscreen = (event) => {
+        selectedImage = event.currentTarget;
+
+        if (!isFullscreen) {
+            fullScreenContainer.children[1].children[0].src = selectedImage.children[0].src;
+            fullScreenContainer.classList.add('fullscreen');
+            overlayBody.classList.add('show-overlay');
+            isFullscreen = true;
+        };
+
+        const handleScroll = (e) => {
+            let newImage, newIndex;
+            let currentIndex = images.indexOf(selectedImage);
+
+            if (e.target === scrollLeft) {
+                if (currentIndex === 0) {
+                    newIndex = images.length - 1;
+                } else {
+                    newIndex = (currentIndex - 1 + images.length) % (images.length);
+                };
+            } else if (e.target === scrollRight) {
+                if (currentIndex === images.length - 1) {
+                    newIndex = 0;
+                } else {
+                    newIndex = (currentIndex + 1) % (images.length);
+                };
+            };
+            newImage = images[newIndex];
+            selectedImage = newImage;
+            fullScreenContainer.children[1].children[0].src = selectedImage.children[0].src;
+        };
+
+        scrollLeft.addEventListener('click', handleScroll);
+        scrollLeft.addEventListener('mouseenter', () => {
+            fullScreenContainer.removeEventListener('click', hideFullscreen)
+        });
+        scrollLeft.addEventListener('mouseleave', () => {
+            fullScreenContainer.addEventListener('click', hideFullscreen)
+        });
+
+        scrollRight.addEventListener('click', handleScroll);
+        scrollRight.addEventListener('mouseenter', () => {
+            fullScreenContainer.removeEventListener('click', hideFullscreen)
+        });
+        scrollRight.addEventListener('mouseleave', () => {
+            fullScreenContainer.addEventListener('click', hideFullscreen)
+        });
+    };
+
+    const hideFullscreen = () => {
+        if (isFullscreen) {
+            fullScreenContainer.src = '';
+            fullScreenContainer.classList.remove('fullscreen');
+            overlayBody.classList.remove('show-overlay');
+            isFullscreen = false;
+        };
+    };
+
+    galleryBtns.forEach(btn => {
+
+        btn.addEventListener('click', (event) => {
+            scroll(event);
+            if (event.currentTarget.id === 'backward') {
+                console.log('backward')
+                checkImg(firstImage);
+            } else if (event.currentTarget.id === 'forward') {
+                console.log('forward')
+                checkImg(lastImage);
+            }
+        })
+    });
+
+    images.forEach(image => {
+        image.addEventListener('click', displayFullscreen)
+    });
+
+    fullScreenContainer.addEventListener('click', hideFullscreen);
+};
+
+// Translation 
+
+const textToTranslate = document.querySelectorAll('.text');
+const menuOptions = document.querySelectorAll('.menu-option');
+const sectionTitles = document.querySelectorAll('.section-title');
+const homeTexts = document.querySelectorAll('.home-text');
+const aboutUs = document.getElementById('about-us-text');
+const concertTexts = document.querySelectorAll('.concert-text');
+const storyContainer = document.querySelector('.story-container');
+const storyTitle = document.querySelector('.story-title');
+const storyContent = document.querySelector('.story-content');
+const menuStories = Array.from(document.querySelectorAll('.menu-story'));
+
+const handleStoriesTranslation = async (lang) => {
+    console.log('translation ok')
+    const response = await fetch('stories.json');
+    const translations = await response.json();
+
+    const appendTranslations = (lang, titleIndex, textTitle) => {
+        storyContent.innerHTML = '';
+        storyTitle.innerHTML = '';
+
+        const title = translations[lang].title[titleIndex];
+        const content = translations[lang].text[textTitle];
+
+        storyTitle.innerHTML = title;
+        content.forEach((paragraph) => {
+            const p = document.createElement('p');
+            p.innerText = paragraph;
+            p.classList.add('story-text', 'text');
+            storyContent.appendChild(p);
+        });
+    };
+
+    if (document.location.pathname.includes("l'ampolla.html")) {
+        appendTranslations(lang, 0, 'lampolla');
+    } else if (document.location.pathname.includes("triafobia.html")) {
+        appendTranslations(lang, 1, 'triafobia');
+    } else if (document.location.pathname.includes("fum.html")) {
+        appendTranslations(lang, 2, 'fum');
+    } else if (document.location.pathname.includes("uns_segons_de_silenci.html")) {
+        appendTranslations(lang, 3, 'silenci');
+    };
+
+    for (let i = 0; i < menuStories.length; i++) {
+        menuStories[i].innerText = translations[lang].title[i];
+    };
+};
+
+handleStoriesTranslation('es');
+
+const translation = {
+    ca: {
+        menu: ["vídeo", "música", "relats", "sobre nosaltres", "concerts", "galeria", "contacte"],
+        home: [{ upcoming: "pròxim concert", today: "avui" }, "aconsegueix entrades"],
+        story: ["L'Ampolla", "Triàfobia", "Fum", "Uns Segons De Silenci"],
+        about: `<div class="small-text scroll-text left">
+                    <div>
+                        Cromo -Croma
+                    </div>
+                    <div>
+                        [LC] Forma sufixada del terme grec <span class='italic'>khrôma</span>, 'color'. (DIEC2)
+                    </div>
+                </div>
+                <p class="scroll-text right">
+                    Croma és la meva realitat distorsionada, allò que em van dir que mai veuria com els altres. La meva condició de daltònic sempre m’ha provocat una fascinació diferent pels colors.
+                </p>
+                <p class="scroll-text left">
+                    Croma és un projecte en trio que es mou entre el jazz contemporani i la literatura. La idiosincràsia del projecte es basa en la composició inspirada en diversos microrelats escrits per Guillem Salles, que transiten entre la ficció distòpica i el costumisme.
+                </p>
+                <p class="scroll-text right">
+                    ‘Cambra Blanca’ <span class='italic'>(AMP Music & Records)</span> és el primer treball de la formació, un disc argumental i també descriptiu, enèrgic i emocional. El disc és una fotografia sonora de la música acústica del trio amb petites pinzellades de postproducció. 4 suites per a 4 relats breus.
+                    Cada tema està inspirat en una història fictícia, en un personatge o en una societat que perceben la realitat distorsionada d’alguna manera.
+                </p>
+                <p class="scroll-text left">
+                    Igual que jo, i igual que tots.
+                </p>`,
+        concert: ["no hi ha concerts programats", "passats"]
+    },
+    es: {
+        menu: ["vídeo", "música", "relatos", "sobre nosotros", "conciertos", "galería", "contacto"],
+        home: [{ upcoming: "próximo concierto", today: "hoy" }, "conseguir entradas"],
+        story: ["La Botella", "Triafobia", "Humo", "Unos Segundos De Silencio"],
+        about: `<div class="small-text scroll-text left">
+                    <div>
+                        Cromo -Croma
+                    </div>
+                    <div>
+                        [LC] Forma sufijada del término griego <span class='italic'>khrôma</span>, 'color'.
+                        (DIEC2)
+                    </div>
+                </div>
+                <p class="scroll-text right">
+                    Croma es mi realidad distorsionada, aquello que me dijeron que nunca vería
+                    como los
+                    demás. Mi condición de daltónico siempre me ha provocado una fascinación diferente
+                    por los colores.
+                </p>
+                <p class="scroll-text left">
+                    Croma es un proyecto en trío que se mueve entre el jazz contemporáneo y la
+                    literatura.
+                    La idiosincrasia del proyecto se basa en la composición inspirada en diversos
+                    microrrelatos escritos por Guillem Salles, los cuales transitan entre la ficción distópica y
+                    el costumbrismo.
+                </p>
+                <p class="scroll-text right">
+                    ‘Cambra Blanca’ <span class='italic'>(AMP Music & Records)</span> es el
+                    primer trabajo de la formación, un
+                    disco argumental y también descriptivo, enérgico y emocional. El disco es una
+                    fotografía sonora de la música acústica del trío con pequeñas pinceladas de
+                    postproducción. 4 suites para 4 relatos breves. Cada tema está inspirado en una historia ficticia, en un
+                    personaje o en una sociedad que perciben la realidad distorsionada de alguna manera.
+                </p>
+                <p class="scroll-text left">
+                    Igual que yo, e igual que todos.
+                </p>`,
+        concert: ["no hay conciertos programados", "pasados"]
+    },
+    en: {
+        menu: ["video", "music", "stories", "about us", "concerts", "gallery", "contact"],
+        home: [{ upcoming: "upcoming concert", today: "today" }, "get tickets"],
+        story: ["The Bottle", "Triaphobia", "Smoke", "A Few Seconds Of Silence"],
+        about: `<div class="small-text scroll-text left">
+                    <div>
+                        Cromo -Croma
+                    </div>
+                    <div>
+                        [LC] Suffix form of the Greek term khrôma, 'color'. (DIEC2) (DIEC2)
+                    </div>
+                </div>
+                <p class="scroll-text right">
+                    Croma is my distorted reality, what they told me I would never see like others do. My condition as a colorblind person has always given me a different fascination with colors.
+                </p>
+                <p class="scroll-text left">
+                    Croma is a trio project that moves between contemporary jazz and literature. The idiosyncrasy of the project is based on compositions inspired by various micro-stories written by Guillem Salles, which range from dystopian fiction to everyday realism.
+                </p>
+                <p class="scroll-text right">
+                    ‘Cambra Blanca’ <span class='italic'>(AMP Music & Records)</span> is the first work by the group, a conceptual and descriptive album, energetic and emotional. The album is a sonic photograph of the trio's acoustic music with small touches of post-production. 4 suites for 4 short stories.
+                    Each track is inspired by a fictional story, a character, or a society that perceives reality in a distorted way.
+                </p>
+                <p class="scroll-text left">
+                    Just like me, and just like everyone else.
+                </p>`,
+        concert: ["no concerts scheduled", "past"]
+    }
+};
+
+const setTranslation = async (language) => {
+    scrollTexts.forEach((text) => {
+        observer.unobserve(text)
+    });
+
+    if (language === languageIcons[0]) {
+        for (let i = 0; i < textToTranslate.length; i++) {
+            textToTranslate[i].style.animation = '';
+            textToTranslate[i].offsetHeight;
+            textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
+        };
+
+        if (document.location.pathname.includes('index.html')) {
+            for (let i = 0; i < menuOptions.length; i++) {
+                menuOptions[i].innerText = translation.ca.menu[i];
+                sectionTitles[i].innerText = translation.ca.menu[i];
+            };
+
+            if (isConcertToday) {
+                homeTexts[0].innerText = translation.ca.home[0].today;
+            } else {
+                homeTexts[0].innerText = translation.ca.home[0].upcoming;
+            };
+            homeTexts[1].innerText = translation.ca.home[1];
+
+            for (let i = 0; i < stories.length; i++) {
+                stories[i].innerText = translation.ca.story[i];
+            };
+            aboutUs.innerHTML = translation.ca.about;
+            for (let i = 0; i < concertTexts.length; i++) {
+                concertTexts[i].innerText = translation.ca.concert[i];
+            };
+        } else {
+            await handleStoriesTranslation('ca');
+        };
+    } else if (language === languageIcons[1]) {
+        for (let i = 0; i < textToTranslate.length; i++) {
+            textToTranslate[i].style.animation = '';
+            textToTranslate[i].offsetHeight;
+            textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
+        };
+
+        if (document.location.pathname.includes('index.html')) {
+            for (let i = 0; i < menuOptions.length; i++) {
+                menuOptions[i].innerText = translation.es.menu[i];
+                sectionTitles[i].innerText = translation.es.menu[i];
+            };
+
+            if (isConcertToday) {
+                homeTexts[0].innerText = translation.es.home[0].today;
+            } else {
+                homeTexts[0].innerText = translation.es.home[0].upcoming;
+            };
+            homeTexts[1].innerText = translation.es.home[1];
+
+            for (let i = 0; i < stories.length; i++) {
+                stories[i].innerText = translation.es.story[i];
+            };
+            aboutUs.innerHTML = translation.es.about;
+            for (let i = 0; i < concertTexts.length; i++) {
+                concertTexts[i].innerText = translation.es.concert[i];
+            };
+        } else {
+            await handleStoriesTranslation('es');
+        };
+    } else if (language === languageIcons[2]) {
+        for (let i = 0; i < textToTranslate.length; i++) {
+            textToTranslate[i].style.animation = '';
+            textToTranslate[i].offsetHeight;
+            textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
+        };
+
+        if (document.location.pathname.includes('index.html')) {
+            for (let i = 0; i < menuOptions.length; i++) {
+                menuOptions[i].innerText = translation.en.menu[i];
+                sectionTitles[i].innerText = translation.en.menu[i];
+            };
+
+            if (isConcertToday) {
+                homeTexts[0].innerText = translation.en.home[0].today;
+            } else {
+                homeTexts[0].innerText = translation.en.home[0].upcoming;
+            };
+            homeTexts[1].innerText = translation.en.home[1];
+
+            for (let i = 0; i < stories.length; i++) {
+                stories[i].innerText = translation.en.story[i];
+            };
+            aboutUs.innerHTML = translation.en.about;
+            for (let i = 0; i < concertTexts.length; i++) {
+                concertTexts[i].innerText = translation.en.concert[i];
+            };
+        } else {
+            await handleStoriesTranslation('en');
+        };
+    };
+
+    const newScrollTexts = document.querySelectorAll('.scroll-text');
+    newScrollTexts.forEach((text) => {
+        observer.observe(text);
+    });
+};
+
+const ticketTranslation = (icon) => {
+    if (document.location.pathname.includes('index.html')) {
+        const ticketTexts = Array.from(document.querySelectorAll('.ticket'));
+        if (icon.innerText === 'CA') {
+            ticketTexts.forEach(ticket => ticket.innerText = 'entrades')
+        } else if (icon.innerText === 'ES') {
+            ticketTexts.forEach(ticket => ticket.innerText = 'entradas')
+        } else if (icon.innerText === 'EN') {
+            ticketTexts.forEach(ticket => ticket.innerText = 'tickets')
+        };
+    } else {
+        return;
+    }
+};
+
+// Language Selection 
+
+const languageIcons = document.querySelectorAll('.language-container');
+console.log('Halloooooo')
+languageIcons[1].classList.add('bold-text');
+
+const handleLanguageSelection = (icon) => {
+    for (let i = 0; i < languageIcons.length; i++) {
+        if (icon === languageIcons[i]) {
+            languageIcons[i].classList.add('bold-text');
+            languageIcons[(i + 1) % 3].classList.remove('bold-text');
+            languageIcons[(i + 2) % 3].classList.remove('bold-text');
+        };
+    };
+};
+
+languageIcons.forEach((icon) => {
+    icon.addEventListener('click', () => {
+        handleLanguageSelection(icon);
+        setTranslation(icon);
+        ticketTranslation(icon);
+    });
+});
+
 // Stories Movement
 
-let isMoving = true;
+/*let isMoving = true;
 
 const getDirection = () => {
     const directions = ['up', 'right', 'down', 'left'];
@@ -466,418 +920,6 @@ const moveAllStories = () => {
 
 moveAllStories();
 
-storiesSection.addEventListener('click', moveAllStories);
-
-// Concerts 
-
-const concertsLists = document.querySelectorAll('.concerts-list');
-
-let concerts = [];
-let pastConcerts = [];
-let todayConcerts = [];
-let upcomingConcerts = [];
-let years = {
-    past: new Set(),
-    today: new Set(),
-    upcoming: new Set()
-};
-
-const fetchSheetData = async () => {
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAV5kqu-WfugA8JDQj2r7WNAWq4YngYttf69SlZGj7OLDwbJw2isuZO1sFSpLvn76arcQbB8-hVkBK/pubhtml';
-
-    try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        const table = doc.querySelector('tbody');
-        const rows = Array.from(table.querySelectorAll('tr')).splice(1);
-
-        concerts = rows.map((row) => {
-            const cells = row.querySelectorAll('td');
-
-            return {
-                date: cells[0]?.innerText || 'N/A',
-                venue: cells[1]?.innerText || 'N/A',
-                venueLink: cells[2]?.innerText || 'N/A',
-                city: cells[3]?.innerText || 'N/A',
-                country: cells[4]?.innerText || 'N/A'
-            };
-        });
-        console.log(concerts)
-        return concerts;
-    } catch (error) {
-        console.log('Error fetching sheet data', error);
-        return [];
-    }
-};
-
-fetchSheetData()
-
-const sortDates = async () => {
-    await fetchSheetData();
-
-    concerts.forEach((concert) => {
-        concert.date = Number(`${concert.date.split('/').reverse().join('')}`)
-    })
-
-    concerts.sort((a, b) => a.date - b.date);
-
-    concerts.forEach(concert => {
-        concert.date = `${String(concert.date).slice(0, 4)}-${String(concert.date).slice(4, 6)}-${String(concert.date).slice(6, 8)}`;
-    });
-};
-
-const sortConcerts = async () => {
-    await sortDates();
-
-    const today = new Date();
-
-    const formatDate = (object) => {
-        object.date = object.date.split('-').join('');
-        object.year = String(object.date).slice(0, 4);
-        object.date = `${String(object.date).slice(6, 8)}.${String(object.date).slice(4, 6)}`;
-    }
-
-    const handleSorting = (concert, concertsArray, timePeriod) => {
-        formatDate(concert);
-        concertsArray.push(concert);
-        years[timePeriod].add(concert.year);
-    };
-
-    concerts.forEach(concert => {
-        const concertDate = new Date(concert.date);
-
-        if (concertDate.getYear() === today.getYear()
-            && concertDate.getMonth() === today.getMonth()
-            && concertDate.getDate() === today.getDate()) {
-            handleSorting(concert, todayConcerts, 'today');
-        } else if (concertDate.toISOString() < today.toISOString()) {
-            handleSorting(concert, pastConcerts, 'past');
-        } else if (concertDate.toISOString() > today.toISOString()) {
-            handleSorting(concert, upcomingConcerts, 'upcoming');
-        }
-    });
-};
-
-const displayConcerts = async () => {
-    await sortConcerts();
-
-    const templateYear = (year) => {
-        return `<div class="year-container"><div class="year">${year}</div></div>`;
-    };
-    const templateCard = (concert) => {
-        return `<div class="concert-card">
-                    <div class="date">${concert.date}</div>
-                    <div class="venue">
-                        <a class="venue-link" href="${concert.venueLink}">${concert.venue}</a>
-                    </div>
-                    <div class="location-container">
-                        <div class="city">${concert.city}</div>
-                        <div class="country">(<span >${concert.country}</span>)</div>
-                    </div>
-                </div>`;
-    };
-
-    const appendConcerts = (list, concertsArray, timePeriod) => {
-        list.style.display = 'block';
-
-        years[timePeriod].forEach(year => {
-            list.lastElementChild.innerHTML += templateYear(year);
-        });
-
-        concertsArray.forEach(concert => {
-            const yearTexts = list.querySelectorAll('.year');
-
-            yearTexts.forEach(yearText => {
-                if (concert.year === yearText.innerText) {
-                    yearText.parentNode.innerHTML += templateCard(concert);
-                };
-            });
-        });
-    };
-
-    concertsLists.forEach(list => {
-        if (list.id === "today-concert") {
-            if (!todayConcerts.length) {
-                return;
-            } else {
-                appendConcerts(list, todayConcerts, 'today');
-            };
-        } else if (list.id === "past-concerts") {
-            if (!pastConcerts.length) {
-                return;
-            } else {
-                appendConcerts(list, pastConcerts, 'past');
-            };
-        } else if (list.id === "upcoming-concerts") {
-            if (!upcomingConcerts.length) {
-                document.getElementById('no-concert-text').style.display = 'flex';
-            } else {
-                appendConcerts(list, upcomingConcerts, 'upcoming');
-            };
-        };
-    });
-};
-
-displayConcerts();
-
-concertsLists.forEach((list) => {
-    const name = list.querySelector('.concerts-list-name');
-    const selector = list.querySelector('.concerts-list-selector');
-    const content = list.querySelector('.concerts-list-content');
-
-    const showConcerts = () => {
-        list.classList.toggle('shadow');
-        selector.classList.toggle('time-period-selected');
-        content.classList.toggle('show-concerts-content');
-    };
-
-    name.addEventListener('click', showConcerts)
-});
-
-// Gallery 
-
-const gallery = document.querySelector('.gallery');
-const slider = document.querySelector('.slider');
-const images = Array.from(document.querySelectorAll('.image'));
-const fullScreenContainer = document.getElementById('fullscreen-container');
-const overlayBody = document.getElementById('overlay-body');
-const scrollLeft = document.getElementById('scroll-left');
-const scrollRight = document.getElementById('scroll-right');
-const galleryBtns = Array.from(document.querySelectorAll('.gallery-btn'));
-
-let isFastOn = false;
-let isGalleryBtnHovered = false;
-let selectedImage = null;
-let isFullscreen = false;
-
-const handleHover = (event) => {
-    const btn = event.currentTarget;
-
-    if (!isGalleryBtnHovered) {
-        isGalleryBtnHovered = true;
-        if (btn.id === 'fast-forward') {
-            btn.children[0].style.fill = 'var(--blue-gray)';
-            btn.children[0].style.cursor = 'pointer';
-        } else {
-            btn.children[0].style.fill = 'var(--blue-gray)';
-            btn.children[0].style.cursor = 'pointer';
-        };
-    } else {
-        isGalleryBtnHovered = false;
-        if (btn.id === 'fast-forward') {
-            btn.children[0].style.fill = 'black';
-        } else {
-            btn.children[0].style.fill = 'black';
-        };
-    }
-};
-
-const imageWidth = slider.style.getPropertyValue('--width').slice(0, -2);
-const quantity = slider.style.getPropertyValue('--quantity');
-const initialLeft = images[0].getBoundingClientRect().left;
-
-let startClick, endClick;
-let animationDuration = 300;
-let imagesCounter = 0;
-
-// on dirait que ça marche. Il faut que je rajoute une condition pour appliquer l'elapsedistance uniquement aux images qui ont un left différent à left 100% (en gros juste les images qui ont commencé à bouger)
-/*const changeSpeed = (event) => {
-    const btn = event.currentTarget;
-
-    if (!isFastOn) {
-        if (btn.id === 'fast-forward') {
-            startClick = Date.now();
-            currentLeft = [];
-            isFastOn = true;
-
-            btn.children[0].style.fill = 'var(--pink)';
-            images.forEach(image => {
-                image.style.animationDuration = `${animationDuration / 5}s`;
-                image.style.animationDelay = `calc((${animationDuration / 5}s / var(--quantity)) * (var(--position) - 1))`;
-            });
-            console.log(currentLeft)
-        } else {
-            isFastOn = true;
-            btn.children[0].style.fill = 'var(--pink)';
-            images.forEach(image => {
-                image.style.left = '-100%';
-                image.style.animation = 'scroll 60s linear reverse infinite';
-                image.style.animationDelay = 'calc((60s / var(--quantity)) * (var(--position) - 1))';
-            });
-        };
-    } else if (isFastOn) {
-        if (btn.id === 'fast-forward') {
-            imagesCounter = 0;
-            endClick = Date.now();
-            const elapsedTime = (endClick - startClick) / 1000;
-            const elapsedDistance = `${(imageWidth / (((animationDuration / 5) / quantity) / elapsedTime))}`;
-
-            console.log(elapsedDistance);
-
-            isFastOn = false;
-
-            btn.children[0].style.fill = 'var(--blue-gray)';
-            images.forEach((image, i) => {
-                if (image.getBoundingClientRect().left !== initialLeft) {
-                    imagesCounter = image.style.getPropertyValue('--position');
-                    console.log(image)
-                    images[i].style.transform = `translateX(${(elapsedDistance * -5) * i}px)`;
-                };
-                console.log(imagesCounter)
-                image.style.animation = `scroll ${animationDuration - elapsedTime}s linear infinite`;
-                image.style.animationDelay = `calc((${animationDuration - elapsedTime}s / var(--quantity) - ${imagesCounter}) * (var(--position) - ${imagesCounter + 1}))`
-            });
-        } else {
-            isFastOn = false;
-            btn.children[0].style.fill = 'var(--blue-gray)';
-            images.forEach((image, i) => {
-                image.style.animation = `scroll ${animationDuration}s linear infinite`;
-                image.style.animationDelay = 'calc((300s / var(--quantity)) * (var(--position) - 1))';
-            })
-        };
-    };
-};*/
-
-const changeSpeed = (event) => {
-    const btn = event.currentTarget;
-    const isFastMode = !isFastOn;
-    const now = Date.now();
-
-    if (isFastMode) {
-        // Enable fast mode
-        startClick = now;
-        isFastOn = true;
-        btn.children[0].style.fill = 'var(--pink)';
-
-        images.forEach((image, i) => {
-            const rect = image.getBoundingClientRect();
-            const distanceMoved = rect.left - initialLeft;
-
-            console.log(`Image ${i}: Distance Moved in Fast Mode: ${distanceMoved}px`);
-
-            // Stop current animation and apply transform
-            image.style.animation = 'none';
-            image.style.transform = `translateX(${distanceMoved}px)`;
-
-            // Restart animation with faster speed
-            setTimeout(() => {
-                const adjustedDelay = `calc((${animationDuration / 5}s / var(--quantity)) * (var(--position) - 1))`;
-                image.style.animation = `scroll ${animationDuration / 5}s linear infinite`;
-                image.style.animationDelay = adjustedDelay;
-
-                console.log(`Image ${i}: Fast Mode Animation Applied`);
-            }, 0);
-        });
-
-    } else {
-        // Disable fast mode
-        endClick = now;
-        const elapsedTime = (endClick - startClick) / 1000; // Seconds
-        isFastOn = false;
-        btn.children[0].style.fill = 'var(--blue-gray)';
-
-        images.forEach((image, i) => {
-            const rect = image.getBoundingClientRect();
-            const distanceMoved = rect.left - initialLeft;
-
-            console.log(`Image ${i}: Distance Moved in Normal Mode: ${distanceMoved}px`);
-
-            // Stop animation and apply transform
-            image.style.animation = 'none';
-            image.style.transform = `translateX(${distanceMoved}px)`;
-
-            // Restart animation with normal speed
-            setTimeout(() => {
-                const adjustedDelay = `calc((${animationDuration}s / var(--quantity)) * (var(--position) - 1))`;
-                image.style.animation = `scroll ${animationDuration}s linear infinite`;
-                image.style.animationDelay = adjustedDelay;
-
-                console.log(`Image ${i}: Normal Mode Animation Applied`);
-            }, 0);
-        });
-    }
-};
-
-
-
-
-galleryBtns.forEach(btn => {
-    btn.addEventListener('mousedown', changeSpeed);
-    btn.addEventListener('mouseup', changeSpeed);
-    btn.addEventListener('mouseover', handleHover);
-    btn.addEventListener('mouseout', handleHover);
-});
-
-const displayFullscreen = (event) => {
-    selectedImage = event.currentTarget;
-
-    if (!isFullscreen) {
-        fullScreenContainer.children[1].children[0].src = selectedImage.children[0].src;
-        fullScreenContainer.classList.add('fullscreen');
-        overlayBody.classList.add('show-overlay');
-        isFullscreen = true;
-    };
-
-    const handleScroll = (e) => {
-        let newImage, newIndex;
-        let currentIndex = images.indexOf(selectedImage);
-
-        if (e.target === scrollLeft) {
-            if (currentIndex === 0) {
-                newIndex = images.length - 1;
-            } else {
-                newIndex = (currentIndex - 1 + images.length) % (images.length);
-            };
-        } else if (e.target === scrollRight) {
-            if (currentIndex === images.length - 1) {
-                newIndex = 0;
-            } else {
-                newIndex = (currentIndex + 1) % (images.length);
-            };
-        };
-        newImage = images[newIndex];
-        selectedImage = newImage;
-        fullScreenContainer.children[1].children[0].src = selectedImage.children[0].src;
-    };
-
-    scrollLeft.addEventListener('click', handleScroll);
-    scrollLeft.addEventListener('mouseenter', () => {
-        fullScreenContainer.removeEventListener('click', hideFullscreen)
-    });
-    scrollLeft.addEventListener('mouseleave', () => {
-        fullScreenContainer.addEventListener('click', hideFullscreen)
-    });
-
-    scrollRight.addEventListener('click', handleScroll);
-    scrollRight.addEventListener('mouseenter', () => {
-        fullScreenContainer.removeEventListener('click', hideFullscreen)
-    });
-    scrollRight.addEventListener('mouseleave', () => {
-        fullScreenContainer.addEventListener('click', hideFullscreen)
-    });
-};
-
-const hideFullscreen = () => {
-    if (isFullscreen) {
-        fullScreenContainer.src = '';
-        fullScreenContainer.classList.remove('fullscreen');
-        overlayBody.classList.remove('show-overlay');
-        isFullscreen = false;
-    };
-};
-
-
-
-images.forEach(image => {
-    image.addEventListener('click', displayFullscreen)
-});
-
-fullScreenContainer.addEventListener('click', hideFullscreen);
-
-
-
-// Stories 
+storiesSection.addEventListener('click', moveAllStories);*/
 
 

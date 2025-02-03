@@ -145,8 +145,23 @@
                 <source src="images/background video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <div id="main-title">
-                <img id="main-logo" src="images/Croma Project Logo.png" />
+            <div id="home-content">
+                <div id="main-title">
+                    <div class="logo-line"></div>
+                    <img id="main-logo" src="images/Croma Project Logo.png" />
+                    <div class="logo-line"></div>
+                </div>
+                <div id="uc-container">
+                    <div id="uc-title" class="text home-text">próximo concierto</div>
+                    <div id="uc-content">
+                        <div id="uc-location">
+                            <div id="uc-venue">village vanguard</div>
+                            <div id="uc-city">new york (<span id="uc-country">us</span>)</div>
+                        </div>
+                        <div id="uc-date">14.02.2025</div>
+                    </div>
+                    <a id="uc-ticket" class="text home-text">conseguir entradas</a>
+                </div>
             </div>
         </div>
     </section>
@@ -173,16 +188,16 @@
         <h2 class="section-title text">relatos</h2>
         <ul id="stories-list">
             <li id="ampolla" class="story">
-                <a class="story-link text" href="l'ampolla.html">L'Ampolla</a>
+                <a class="story-link text scroll-text" href="l'ampolla.html">L'Ampolla</a>
             </li>
             <li id="triafobia" class="story">
-                <a class="story-link text" href="triafobia.html">Triàfobia</a>
+                <a class="story-link text scroll-text" href="triafobia.html">Triàfobia</a>
             </li>
             <li id="fum" class="story">
-                <a class="story-link text" href="fum.html">Humo</a>
+                <a class="story-link text scroll-text" href="fum.html">Humo</a>
             </li>
             <li id="silenci" class="story">
-                <a class="story-link text" href="uns segons de silenci.html">Uns Segons De Silenci</a>
+                <a class="story-link text scroll-text" href="uns_segons_de_silenci.html">Uns Segons De Silenci</a>
             </li>
         </ul>
     </section>
@@ -228,28 +243,16 @@
     <section class="section" id="concerts">
         <h2 class="section-title text">conciertos</h2>
         <div id="concerts-container">
-            <div id="today-concert" class="concerts-list">
-                <h3 class="concerts-list-name">
-                    <div class="concerts-list-selector"></div>
-                    <div class="text concert-text">hoy</div>
-                </h3>
-                <div class="concerts-list-content"></div>
-            </div>
+            <div id="upcoming-concerts" class="concerts-list"></div>
+            <div id="no-concert-text" class="text concert-text">No hay conciertos programados</div>
             <div id="past-concerts" class="concerts-list">
                 <h3 class="concerts-list-name">
                     <div class="concerts-list-selector"></div>
-                    <div class="text concert-text">pasados</div>
-                </h3>
-                <div class="concerts-list-content"></div>
-            </div>
-            <div id="upcoming-concerts" class="concerts-list">
-                <h3 class="concerts-list-name">
+                    <div class="text concert-text time-period">pasados</div>
                     <div class="concerts-list-selector"></div>
-                    <div class="text concert-text">próximos</div>
                 </h3>
                 <div class="concerts-list-content"></div>
             </div>
-            <div id="no-concert-text" class="text concert-text">No hay conciertos programados</div>
         </div>
     </section>
     <section class="section" id="gallery">
@@ -271,79 +274,83 @@
 	C256.465,169.749,256.465,160.252,250.607,154.394z M105,278.787V51.214L218.787,165L105,278.787z" />
             </svg>
         </div>
-        <div id="gallery-btns-container">
-            <div id="fast-backward" class="gallery-btn">
-                <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
-                    <g>
-                        <path class="st0" d="M255.996,0.004C114.624,0.004,0,114.627,0,256c0,141.373,114.624,255.996,255.996,255.996
-                   C397.377,511.996,512,397.373,512,256C512,114.627,397.377,0.004,255.996,0.004z M401.892,258.586l-128.849,76.921
-                   c-0.922,0.546-2.094,0.578-3.047,0.015c-0.929-0.515-1.508-1.515-1.508-2.625v-58.265l-101.974,60.874
-                   c-0.922,0.546-2.094,0.578-3.047,0.015c-0.914-0.515-1.508-1.515-1.508-2.625v-76.889v-76.921c0-1.078,0.594-2.094,1.508-2.625
-                   c0.954-0.546,2.125-0.515,3.047,0.031l101.974,60.874v-58.281c0-1.078,0.578-2.094,1.508-2.625
-                   c0.954-0.546,2.126-0.515,3.047,0.031l128.849,76.921c0.922,0.515,1.469,1.531,1.469,2.594
-                   C403.361,257.07,402.814,258.054,401.892,258.586z" />
-                    </g>
-                </svg>
-            </div>
-            <div id="fast-forward" class="gallery-btn">
-                <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
-                    <g>
-                        <path class="st0" d="M255.996,0.004C114.624,0.004,0,114.627,0,256c0,141.373,114.624,255.996,255.996,255.996
-                   C397.377,511.996,512,397.373,512,256C512,114.627,397.377,0.004,255.996,0.004z M401.892,258.586l-128.849,76.921
-                   c-0.922,0.546-2.094,0.578-3.047,0.015c-0.929-0.515-1.508-1.515-1.508-2.625v-58.265l-101.974,60.874
-                   c-0.922,0.546-2.094,0.578-3.047,0.015c-0.914-0.515-1.508-1.515-1.508-2.625v-76.889v-76.921c0-1.078,0.594-2.094,1.508-2.625
-                   c0.954-0.546,2.125-0.515,3.047,0.031l101.974,60.874v-58.281c0-1.078,0.578-2.094,1.508-2.625
-                   c0.954-0.546,2.126-0.515,3.047,0.031l128.849,76.921c0.922,0.515,1.469,1.531,1.469,2.594
-                   C403.361,257.07,402.814,258.054,401.892,258.586z" />
-                    </g>
-                </svg>
-            </div>
-        </div>
         <div class="slider" style="
             --width: 500px;
             --height: 500px;
             --quantity: 24">
+            <div id="backward" class="gallery-btn">
+                <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <g>
+                        <path class="st0" d="M255.996,0.004C114.624,0.004,0,114.627,0,256c0,141.373,114.624,255.996,255.996,255.996
+                       C397.377,511.996,512,397.373,512,256C512,114.627,397.377,0.004,255.996,0.004z M401.892,258.586l-128.849,76.921
+                       c-0.922,0.546-2.094,0.578-3.047,0.015c-0.929-0.515-1.508-1.515-1.508-2.625v-58.265l-101.974,60.874
+                       c-0.922,0.546-2.094,0.578-3.047,0.015c-0.914-0.515-1.508-1.515-1.508-2.625v-76.889v-76.921c0-1.078,0.594-2.094,1.508-2.625
+                       c0.954-0.546,2.125-0.515,3.047,0.031l101.974,60.874v-58.281c0-1.078,0.578-2.094,1.508-2.625
+                       c0.954-0.546,2.126-0.515,3.047,0.031l128.849,76.921c0.922,0.515,1.469,1.531,1.469,2.594
+                       C403.361,257.07,402.814,258.054,401.892,258.586z" />
+                    </g>
+                </svg>
+            </div>
+            <div id="forward" class="gallery-btn">
+                <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <g>
+                        <path class="st0" d="M255.996,0.004C114.624,0.004,0,114.627,0,256c0,141.373,114.624,255.996,255.996,255.996
+                       C397.377,511.996,512,397.373,512,256C512,114.627,397.377,0.004,255.996,0.004z M401.892,258.586l-128.849,76.921
+                       c-0.922,0.546-2.094,0.578-3.047,0.015c-0.929-0.515-1.508-1.515-1.508-2.625v-58.265l-101.974,60.874
+                       c-0.922,0.546-2.094,0.578-3.047,0.015c-0.914-0.515-1.508-1.515-1.508-2.625v-76.889v-76.921c0-1.078,0.594-2.094,1.508-2.625
+                       c0.954-0.546,2.125-0.515,3.047,0.031l101.974,60.874v-58.281c0-1.078,0.578-2.094,1.508-2.625
+                       c0.954-0.546,2.126-0.515,3.047,0.031l128.849,76.921c0.922,0.515,1.469,1.531,1.469,2.594
+                       C403.361,257.07,402.814,258.054,401.892,258.586z" />
+                    </g>
+                </svg>
+            </div>
             <div class="gallery">
-                <div class="image" style="--position: 1"><img src="images/promo/1.jpg" alt=""></div>
-                <div class="image" style="--position: 2"><img src="images/promo/2.jpg" alt=""></div>
-                <div class="image" style="--position: 3"><img src="images/promo/3.jpg" alt=""></div>
-                <div class="image" style="--position: 4"><img src="images/promo/4.jpg" alt=""></div>
-                <div class="image" style="--position: 5"><img src="images/promo/5.jpg" alt=""></div>
-                <div class="image" style="--position: 6"><img src="images/promo/6.jpg" alt=""></div>
-                <div class="image" style="--position: 7"><img src="images/promo/7.jpg" alt=""></div>
-                <div class="image" style="--position: 8"><img src="images/recording/1.jpg" alt=""></div>
-                <div class="image" style="--position: 9"><img src="images/recording/2.jpg" alt=""></div>
-                <div class="image" style="--position: 10"><img src="images/recording/3.jpg" alt=""></div>
-                <div class="image" style="--position: 11"><img src="images/recording/4.jpg" alt=""></div>
-                <div class="image" style="--position: 12"><img src="images/recording/5.jpg" alt=""></div>
-                <div class="image" style="--position: 13"><img src="images/recording/6.jpg" alt=""></div>
-                <div class="image" style="--position: 14"><img src="images/recording/7.jpg" alt=""></div>
-                <div class="image" style="--position: 15"><img src="images/recording/8.jpg" alt=""></div>
-                <div class="image" style="--position: 16"><img src="images/recording/9.jpg" alt=""></div>
-                <div class="image" style="--position: 17"><img src="images/recording/10.jpg" alt=""></div>
-                <div class="image" style="--position: 18"><img src="images/recording/11.jpg" alt=""></div>
-                <div class="image" style="--position: 19"><img src="images/recording/12.jpg" alt=""></div>
-                <div class="image" style="--position: 20"><img src="images/recording/13.jpg" alt=""></div>
-                <div class="image" style="--position: 21"><img src="images/recording/14.jpg" alt=""></div>
-                <div class="image" style="--position: 22"><img src="images/recording/15.jpg" alt=""></div>
-                <div class="image" style="--position: 23"><img src="images/recording/16.jpg" alt=""></div>
-                <div class="image" style="--position: 24"><img src="images/recording/17.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/1.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/2.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/3.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/4.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/5.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/6.jpg" alt=""></div>
+                <div class="image"><img src="images/promo/7.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/1.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/2.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/3.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/4.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/5.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/6.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/7.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/8.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/9.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/10.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/11.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/12.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/13.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/14.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/15.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/16.jpg" alt=""></div>
+                <div class="image"><img src="images/recording/17.jpg" alt=""></div>
             </div>
         </div>
     </section>
     <section class="section" id="contact">
         <h2 class="section-title text">contacto</h2>
-        <p id="contact-text">
-            <a class="navbar-link">cromatrio.project@gmail.com</a>
-        </p>
+        <div id="contact-content">
+            <div class="contact-container">
+                <p class="contact-name">Guillem Salles</p>
+                <a class="contact-link" href="mailto:cromatrio.project@gmail.com">cromatrio.project@gmail.com</a>
+            </div>
+            <div class="contact-container">
+                <p class="contact-name">AMP Music & Records</p>
+                <a class="contact-link" href="mailto:contact@ampmusicrecords.com">contact@ampmusicrecords.com</a>
+            </div>
         </div>
     </section>
     <footer>
         <p class="text" id="footer-text">
-            Photos by <a class="footer-link">Manuel</a><br>
-            Site design by <a class="footer-link">Wilfried Wilde</a>
+            Video and photos by <a class="footer-link" href="https://www.instagram.com/cosnuprod/">Cosnu Prod</a><br>
+            Site design by <a class="footer-link" href="https://www.instagram.com/wilfriedwilde/">Wilfried Wilde</a>
         </p>
     </footer>
     <div id="overlay-body"></div>

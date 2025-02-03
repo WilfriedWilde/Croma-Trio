@@ -13,6 +13,22 @@
   font-stretch: 50% 200%;
 }
 
+@font-face {
+  font-family: 'Garamond';
+  src: url('fonts/garamond.ttf') format('truetype');
+  font-weight: 400 800;
+  font-style: normal;
+  font-stretch: 50% 200%;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('fonts/roboto.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-stretch: 50% 200%;
+}
+
 :root {
   --white-transparent: hsla(0, 0%, 100%, 0.9);
   --dark-gray: #354759;
@@ -24,7 +40,7 @@
   --light-pink: #cfbcc0;
   --blue: hsl(201 100% 50%);
   --title: "Bahnschrift", sans-serif;
-  --main: "Bahnschrift", serif;
+  --main: "Roboto", serif;
 }
 
 html {
@@ -73,7 +89,9 @@ body {
   transition: transform 0.5s ease;
   background-color: var(--white-transparent);
   backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   z-index: 4;
+  font-family: var(--title);
 }
 
 #navbar.hide-navbar {
@@ -116,12 +134,12 @@ body {
 }
 
 .home path {
-  fill: rgba(0, 0, 0, 0.379);
+  fill: black;
   transition: all 0.3s ease;
 }
 
 #logo-container:hover .home path {
-  fill: black;
+  fill: var(--pink);
 }
 
 #languages-list {
@@ -135,7 +153,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
   z-index: 5;
   text-transform: uppercase;
@@ -151,7 +169,7 @@ body {
   grid-template-columns: repeat(7, 1fr);
   align-items: center;
   gap: 20px;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 300;
   text-align: center;
   grid-area: link;
@@ -172,11 +190,13 @@ body {
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   gap: 10px;
-  font-size: 32px;
-  font-weight: 500;
+  font-size: 23px;
+  font-weight: 300;
   text-align: center;
   grid-area: link;
   align-self: center;
+  text-transform: uppercase;
+  position: relative;
 }
 
 #social-medias-list {
@@ -352,8 +372,20 @@ body {
   background-size: 150%;
 }
 
+.section-title {
+  font-family: var(--title);
+  font-size: 70px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 75px 0;
+  z-index: 1;
+}
+
+/* HOME */
+
 #home {
-  height: 150vh;
+  height: 200vh;
   padding: 0;
 }
 
@@ -375,34 +407,120 @@ body {
   z-index: -1;
 }
 
+#home-content {
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(3px);
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
 #main-title {
   width: 100%;
-  height: 100%;
-  z-index: 1;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: hsla(0, 0%, 100%, 0.4);
-  backdrop-filter: blur(2px);
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 #main-logo {
-  width: 80%;
-  height: 80%;
-  position: relative;
-  top: -145px;
+  width: 150%;
+  object-fit: contain;
+  filter: invert(1);
 }
 
-.section-title {
-  font-family: var(--title);
-  font-size: 70px;
-  font-weight: 600;
+.logo-line {
+  width: 100%;
+  height: 5px;
+  background-color: white;
+  margin: 0px 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px black;
+}
+
+#uc-container {
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px black;
+  margin-bottom: 1rem;
+}
+
+#uc-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 2rem;
+}
+
+#uc-title {
   text-transform: uppercase;
-  text-align: center;
-  margin: 75px 0;
-  z-index: 1;
+  height: 100%;
+  align-content: center;
+  font-size: 65px;
+  font-weight: 200;
+}
+
+#uc-location {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#uc-venue {
+  text-transform: capitalize;
+  font-size: 50px;
+  font-weight: 800;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease
+}
+
+#uc-venue:hover {
+  color: var(--pink);
+}
+
+#uc-city {
+  text-transform: capitalize;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 23px;
+}
+
+#uc-country {
+  text-transform: uppercase;
+}
+
+#uc-date {
+  font-size: 45px;
+  font-weight: 500;
+}
+
+#uc-ticket {
+  text-transform: uppercase;
+  align-content: center;
+  font-size: 28px;
+  background-color: black;
+  text-shadow: none;
+  border-radius: 15px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: white;
+}
+
+#uc-ticket:hover {
+  background-color: var(--pink);
 }
 
 /* VIDEO */
@@ -428,15 +546,13 @@ body {
 }
 
 #music a {
-  width: 700px;
+  height: 400px;
+  width: 400px;
   text-align: center;
   transition: all 0.3s ease;
-  height: 700px;
-  border: 0px dotted black;
 }
 
 #music a:hover {
-  border: 5px dotted black;
   transform: scale(1.02);
 }
 
@@ -455,38 +571,40 @@ body {
 
 #stories-list {
   list-style: none;
-  position: relative;
-  text-align: center;
-  width: 80%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  height: 400px;
+  height: 100vh;
 }
 
 .story {
-  width: 100%;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  max-width: 500px;
+  text-align: center;
 }
 
 .story-link {
   font-size: 60px;
-  position: absolute;
-  transition: all 0.5s ease;
-  color: var(--dark-purple);
-  font-weight: 600;
   text-decoration: none;
+  color: var(--dark-purple);
+  opacity: 0;
 }
 
-.story-link:hover {
+.story-link.show-story {
+  font-weight: 200;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 2s ease-in-out, color 1s ease, transform 0.2s ease, font-weight 0.2s ease;
+}
+
+.story-link.show-story:hover {
   cursor: pointer;
   color: black;
-  transform-origin: center;
-  transform: scale(1.2);
-}
-
-.menu-story {
-  text-transform: capitalize;
+  transform: scale(1.05);
+  font-weight: 550;
+  transition: all 0.8s ease;
 }
 
 /* ABOUT US */
@@ -518,8 +636,8 @@ body {
   flex-direction: column;
   position: relative;
   text-align: justify;
-  font-weight: 250;
-  font-size: 35px;
+  font-weight: 150;
+  font-size: 26px;
   z-index: 1;
   width: 50%;
   gap: 40px;
@@ -571,16 +689,19 @@ body {
   justify-content: flex-start;
   align-items: flex-start;
   width: 80%;
-  gap: 30px;
+  gap: 10rem;
 }
 
-#today-concert,
 #past-concerts,
 #upcoming-concerts {
   display: none;
 }
 
-.concerts-list {
+#upcoming-concerts {
+  width: 100%;
+}
+
+#past-concerts {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 30px;
@@ -595,26 +716,38 @@ body {
   gap: 15px;
   font-size: 40px;
   font-weight: 400;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease;
   border-radius: 5px;
   text-transform: uppercase;
   height: 25px;
+  justify-content: center;
 }
 
 .concerts-list-selector {
-  height: 0px;
-  border-left: dotted 5px var(--pink);
-  transition: all 0.3s ease;
-  top: -5px;
+  height: 2px;
+  transition: all 0.6s ease;
   position: relative;
+  width: 0;
+  background-color: var(--pink);
+  border-radius: 10px;
 }
 
 .concerts-list-name:hover {
   cursor: pointer;
 }
 
+.concerts-list-name.concerts-list-selector {
+  transition: all 0.6s ease;
+  width: 0;
+}
+
 .concerts-list-name:hover .concerts-list-selector {
-  height: 30px;
+  transition: all 0.6s ease;
+  width: 100%;
+}
+
+.time-period {
+  padding: 0 5rem;
 }
 
 .concerts-list-content {
@@ -625,7 +758,8 @@ body {
 }
 
 .time-period-selected {
-  height: 30px;
+  height: 10px;
+  width: 100%;
 }
 
 .show-concerts-content {
@@ -643,41 +777,59 @@ body {
   align-items: flex-start;
   width: 100%;
   margin-top: 70px;
+  gap: 30px;
 }
 
 .year {
   font-size: 60px;
   font-weight: 800;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+  text-align: center;
+  width: 100%;
 }
 
 .concert-card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  justify-items: start;
+  align-items: center;
+  border-bottom: solid 1px white;
+  height: 80px;
+}
+
+.concert-card-past {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   justify-items: start;
   align-items: center;
-  border-bottom: solid 2.5px black;
+  border-bottom: solid 1px white;
   height: 80px;
 }
 
 .date {
   font-size: 45px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .venue {
+  justify-self: start;
+}
+
+.venue-past {
   justify-self: center;
 }
 
 .venue-link {
   text-decoration: none;
-  font-size: 35px;
-  font-weight: 400;
-  font-style: italic;
+  font-size: 38px;
+  font-weight: 550;
   transition: 0.3s ease;
   color: white;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  width: 110%;
+  display: inline-block;
 }
 
 .venue-link:hover {
@@ -693,13 +845,31 @@ body {
 }
 
 .city {
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 200;
+  font-style: italic;
 }
 
 .country {
   font-size: 30px;
   font-weight: 200;
+  font-style: italic;
+}
+
+.ticket {
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  transition: 0.3s ease;
+  justify-self: end;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.ticket:hover {
+  background-color: var(--pink);
 }
 
 #no-concert-text {
@@ -739,14 +909,9 @@ body {
   top: 50%;
   width: 40px;
   height: 40px;
-  padding: 15px 10px 15px 20px;
-  border-radius: 50%;
-  border: 4px solid rgba(0, 0, 0, 0.379);
   z-index: 6;
-  background-color: hsla(0, 0%, 100%, 0.7);
-  fill: rgba(0, 0, 0, 0.379);
+  fill: rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease;
-  backdrop-filter: blur(3px);
 }
 
 #scroll-left {
@@ -760,9 +925,8 @@ body {
 }
 
 .scroll-arrow:hover {
-  fill: black;
-  border: 4px solid var(--pink);
   cursor: pointer;
+  fill: var(--pink);
 }
 
 #fullscreen-image {
@@ -775,61 +939,48 @@ body {
   width: 100%;
 }
 
+#fullscreen-image img:hover {
+  cursor: pointer;
+}
+
 #fullscreen-container.fullscreen {
   opacity: 1;
   z-index: 5;
   transition: all 0.5s ease;
 }
 
-#gallery-btns-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5rem;
-}
-
-.gallery-btn {
-  width: 70px;
-  height: 70px;
-}
-
-.gallery-btn svg {
-  width: 100%;
-  height: 100%;
-  fill: black;
-  transition: all 0.3s ease;
-}
-
-#fast-backward {
-  transform: rotate(180deg);
-}
-
 .slider {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 95%;
+  position: relative;
+  width: 100%;
   height: calc(var(--height) + 60px);
   overflow: hidden;
-  position: relative;
   mask-image: linear-gradient(to right, transparent, black 5% 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5% 95%, transparent);
+  transform: translateX(-50%);
+  top: 50%;
+  left: 50%;
 }
 
 .slider .gallery {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: var(--height);
   min-width: calc(var(--width) * var(--quantity));
-  position: relative;
+  position: absolute;
+  transition: all 0.2 ease;
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, -50%);
 }
 
 .slider .gallery .image {
   width: var(--width);
   height: var(--height);
   position: absolute;
-  left: 100%;
-  animation: scroll 300s linear infinite;
-  animation-delay: calc((300s / var(--quantity)) * (var(--position) - 1));
+  filter: grayscale(1) blur(2px);
+  transition: transform 0.5s cubic-bezier(.65,.05,.36,1), filter 0.3s ease;
 }
 
 .slider .gallery .image img {
@@ -839,24 +990,40 @@ body {
   object-fit: cover;
 }
 
-.slider:hover .image {
-  filter: grayscale(1) blur(2px);
+.slider .image:hover {
+  filter: grayscale(0);
   cursor: pointer;
 }
 
-.slider .image:hover {
-  filter: grayscale(0);
-  transform: scale(1.05);
+.gallery-btn {
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  transition: 0.3s ease;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: 2;
 }
 
-@keyframes scroll {
-  from {
-    left: 100%;
-  }
+.gallery-btn svg {
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
 
-  to {
-    left: calc(var(--width) * -1);
-  }
+.gallery-btn:hover {
+  cursor: pointer;
+  background-color: var(--pink);
+}
+
+#backward {
+  transform: rotate(180deg);
+  left: 8%;
+}
+
+#forward {
+  right: 8%;
 }
 
 #overlay-body {
@@ -867,6 +1034,7 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   pointer-events: none;
   opacity: 0;
   transition: all 0.5s ease;
@@ -883,14 +1051,41 @@ body {
 /* CONTACT */
 
 #contact {
-  height: 50vh;
-  gap: 150px;
+  gap: 30px;
 }
 
-#contact-text {
+#contact-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-name {
   font-size: 40px;
-  font-weight: 300;
+  font-weight: 450;
+}
+
+.contact-link {
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+  font-weight: 200;
   letter-spacing: 2px;
+  transition: 0.3s ease;
+}
+
+.contact-link:hover {
+  cursor: pointer;
+  color: var(--pink);
 }
 
 /* FOOTER */
@@ -905,16 +1100,17 @@ footer {
 
 #footer-text {
   text-align: center;
-  font-size: 25px;
-  font-weight: 150;
+  font-size: 20px;
+  font-weight: 200;
   color: white;
-  letter-spacing: 1px;
   line-height: 1.5;
 }
 
 .footer-link {
   color: white;
   transition: color 0.3s ease;
+  font-weight: 400;
+  text-decoration: none;
 }
 
 .footer-link:hover {
@@ -927,12 +1123,13 @@ footer {
 .story-container {
   display: flex;
   flex-direction: column;
-  gap: 200px;
+  gap: 130px;
   justify-content: flex-start;
   align-items: center;
-  background-color: black;
-  color: white;
-  height: 1000vh;
+  background-color: var(--light-gray);
+  color: black;
+  min-height: 100vh;
+  padding: 3rem 0;
 }
 
 .story-content {
@@ -940,22 +1137,22 @@ footer {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .story-title {
   font-family: var(--title);
-  margin-top: 40px;
   text-transform: uppercase;
   font-size: 100px;
-  font-weight: 800;
+  font-weight: 650;
   letter-spacing: 2px;
   text-align: center;
 }
 
 .story-text {
   text-align: justify;
-  font-size: 33px;
-  font-weight: 150;
-  width: 80%;
+  font-size: 26px;
+  font-weight: 300;
+  width: 85%;
+  font-stretch: 80%;
 }
