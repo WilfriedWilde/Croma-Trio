@@ -1,6 +1,7 @@
-const isIndexPage = () => 
+const isIndexPage = () => {
     !["/l'ampolla.html", "/triafobia.html", "/fum.html", "/uns_segons_de_silenci.html"]
         .some(pathname => pathname === document.location.pathname);
+};
 const stories = document.querySelectorAll('.story-link');
 
 // Navbar Display 
