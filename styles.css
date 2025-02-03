@@ -365,13 +365,6 @@ body {
   padding-bottom: 100px;
 }
 
-.intersection {
-  height: 150vh;
-  background: url(images/cloud-white.png);
-  background-position-x: center;
-  background-size: 150%;
-}
-
 .section-title {
   font-family: var(--title);
   font-size: 70px;
@@ -562,11 +555,37 @@ body {
 
 /* STORIES */
 
-#stories {
+/* #stories {
+  height: 100vh;
   background: url(images/cloud.png);
   background-position: center;
   background-size: 150%;
   gap: 100px;
+  position: relative;
+  overflow: hidden;
+} */
+
+#stories {
+  height: 150vh;
+  gap: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background-image: url(images/cloud.png);
+  background-size: 150%;
+  background-position: center;
+}
+
+.parallax-content {
+  position: relative;
+  z-index: 2;
 }
 
 #stories-list {
@@ -611,10 +630,11 @@ body {
 
 #about-us {
   background: url(images/promo/1.jpg);
-  background-size: 100%;
+  background-size: cover;
   color: white;
   position: relative;
   gap: 100px;
+  background-position: center;
 }
 
 #overlay-about-us {
@@ -980,7 +1000,7 @@ body {
   height: var(--height);
   position: absolute;
   filter: grayscale(1) blur(2px);
-  transition: transform 0.5s cubic-bezier(.65,.05,.36,1), filter 0.3s ease;
+  transition: transform 0.5s cubic-bezier(.65, .05, .36, 1), filter 0.3s ease;
 }
 
 .slider .gallery .image img {

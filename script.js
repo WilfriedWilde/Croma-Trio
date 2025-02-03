@@ -124,17 +124,28 @@ instagramIcon.addEventListener('mouseleave', () => {
 const storiesSection = document.getElementById('stories');
 
 if (isIndexPage()) {
-    const storiesSection = document.getElementById('stories');
-    const aboutUsSection = document.getElementById('about-us');
+    const storiesParallax = document.querySelectorAll('.parallax');
 
     const handleParallax = () => {
-        const offset = window.scrollY;
+        const scrollTop = window.scrollY;
+        const windowHeight = window.innerHeight;
 
-        storiesSection.style.backgroundPositionY = 700 + offset * 0.7 + "px";
-        aboutUsSection.style.backgroundPositionY = 600 + offset * 0.7 + "px";
-    }
+        storiesParallax.forEach(parallax => {
+            const parallaxOffset = parallax.getBoundingClientRect().top + scrollTop; 
+            const parallaxHeight = parallax.offsetHeight;
+            const isInView = scrollTop + windowHeight > parallaxOffset && scrollTop < parallaxOffset + parallaxHeight;
+
+            if (isInView) {
+                const moveAmount = (scrollTop - parallaxOffset) * 0.5;
+                const limitedMoveAmount = Math.min(Math.max(moveAmount, -parallaxHeight / 2), parallaxHeight / 2);
+                parallax.style.transform = `translateY(${limitedMoveAmount}px)`;
+            }
+        });
+    };
 
     window.addEventListener('scroll', handleParallax);
+
+
 };
 
 // Concerts 
