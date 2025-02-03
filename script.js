@@ -1,3 +1,6 @@
+const isIndexPage = () => 
+    !["/l'ampolla.html", "/triafobia.html", "/fum.html", "/uns_segons_de_silenci.html"]
+        .some(pathname => pathname === document.location.pathname);
 const stories = document.querySelectorAll('.story-link');
 
 // Navbar Display 
@@ -119,7 +122,7 @@ instagramIcon.addEventListener('mouseleave', () => {
 
 const storiesSection = document.getElementById('stories');
 
-if (document.location.pathname.includes("index.html")) {
+if (isIndexPage()) {
     const storiesSection = document.getElementById('stories');
     const aboutUsSection = document.getElementById('about-us');
 
@@ -331,7 +334,7 @@ const displayConcerts = async () => {
     });
 };
 
-if (document.location.pathname.includes('index.html')) {
+if (isIndexPage()) {
     displayConcerts();
 };
 
@@ -353,8 +356,8 @@ concertsLists.forEach((list) => {
 
 // Gallery 
 
-if (document.location.pathname.includes('index.html')) {
-    
+if (isIndexPage()) {
+
     const galleryBtns = Array.from(document.querySelectorAll('.gallery-btn'));
     const slider = document.querySelector('.slider');
     const gallery = document.querySelector('.gallery');
@@ -521,10 +524,8 @@ if (document.location.pathname.includes('index.html')) {
         btn.addEventListener('click', (event) => {
             scroll(event);
             if (event.currentTarget.id === 'backward') {
-                console.log('backward')
                 checkImg(firstImage);
             } else if (event.currentTarget.id === 'forward') {
-                console.log('forward')
                 checkImg(lastImage);
             }
         })
@@ -551,7 +552,6 @@ const storyContent = document.querySelector('.story-content');
 const menuStories = Array.from(document.querySelectorAll('.menu-story'));
 
 const handleStoriesTranslation = async (lang) => {
-    console.log('translation ok')
     const response = await fetch('stories.json');
     const translations = await response.json();
 
@@ -696,7 +696,7 @@ const setTranslation = async (language) => {
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
 
-        if (document.location.pathname.includes('index.html')) {
+        if (isIndexPage()) {
             for (let i = 0; i < menuOptions.length; i++) {
                 menuOptions[i].innerText = translation.ca.menu[i];
                 sectionTitles[i].innerText = translation.ca.menu[i];
@@ -726,7 +726,7 @@ const setTranslation = async (language) => {
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
 
-        if (document.location.pathname.includes('index.html')) {
+        if (isIndexPage()) {
             for (let i = 0; i < menuOptions.length; i++) {
                 menuOptions[i].innerText = translation.es.menu[i];
                 sectionTitles[i].innerText = translation.es.menu[i];
@@ -756,7 +756,7 @@ const setTranslation = async (language) => {
             textToTranslate[i].style.animation = 'fade-in 1s ease-in-out forwards';
         };
 
-        if (document.location.pathname.includes('index.html')) {
+        if (isIndexPage()) {
             for (let i = 0; i < menuOptions.length; i++) {
                 menuOptions[i].innerText = translation.en.menu[i];
                 sectionTitles[i].innerText = translation.en.menu[i];
@@ -788,7 +788,7 @@ const setTranslation = async (language) => {
 };
 
 const ticketTranslation = (icon) => {
-    if (document.location.pathname.includes('index.html')) {
+    if (isIndexPage()) {
         const ticketTexts = Array.from(document.querySelectorAll('.ticket'));
         if (icon.innerText === 'CA') {
             ticketTexts.forEach(ticket => ticket.innerText = 'entrades')
@@ -805,7 +805,6 @@ const ticketTranslation = (icon) => {
 // Language Selection 
 
 const languageIcons = document.querySelectorAll('.language-container');
-console.log('Halloooooo')
 languageIcons[1].classList.add('bold-text');
 
 const handleLanguageSelection = (icon) => {
