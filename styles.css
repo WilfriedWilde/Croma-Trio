@@ -14,14 +14,6 @@
 }
 
 @font-face {
-  font-family: 'Garamond';
-  src: url('fonts/garamond.ttf') format('truetype');
-  font-weight: 400 800;
-  font-style: normal;
-  font-stretch: 50% 200%;
-}
-
-@font-face {
   font-family: 'Roboto';
   src: url('fonts/roboto.ttf') format('truetype');
   font-weight: 100 900;
@@ -619,7 +611,7 @@ body {
 /* ABOUT US */
 
 #about-us {
-  background: url(images/promo/1.jpg);
+  background: url(images/about\ us.jpg);
   background-size: cover;
   color: white;
   position: relative;
@@ -962,7 +954,7 @@ body {
 .slider {
   position: relative;
   width: 100%;
-  height: calc(var(--height) + 60px);
+  height: var(--height);
   overflow: hidden;
   mask-image: linear-gradient(to right, transparent, black 5% 95%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 5% 95%, transparent);

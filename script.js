@@ -379,7 +379,6 @@ if (isIndexPage()) {
     const scrollLeft = document.getElementById('scroll-left');
     const scrollRight = document.getElementById('scroll-right');
 
-    let isGalleryBtnHovered = false;
     let selectedImage = null;
     let isFullscreen = false;
     let imgIndex = 0;
@@ -582,7 +581,7 @@ const translation = {
     ca: {
         menu: ["vídeo", "música", "relats", "sobre nosaltres", "concerts", "galeria", "contacte"],
         home: [{ upcoming: "pròxim concert", today: "avui" }, "aconsegueix entrades"],
-        story: ["L'Ampolla", "Triàfobia", "Fum", "Uns Segons De Silenci"],
+        story: ["L'Ampolla", "Triafòbia", "Fum", "Uns Segons De Silenci"],
         about: `<div class="small-text scroll-text left">
                     <div>
                         Cromo -Croma
