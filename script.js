@@ -7,24 +7,48 @@ const stories = document.querySelectorAll('.story-link');
 // Navbar Display 
 
 const navbar = document.getElementById('navbar');
+const navbarLinks = Array.from(document.querySelectorAll('.navbar-link'));
+navbarLinks.push(document.getElementById('home-link'));
 
-let lastScrollY = 0;
+if (window.innerWidth < 480) {
+    const menuBtnMobile = document.getElementById('menu-btn-mobile');
 
-const handleNavbarDisplay = () => {
-    const currentScrollY = window.scrollY;
+    menuBtnMobile.style.display = "flex";
+    const navbarDisplayMobile = () => {
+        navbar.classList.toggle('show-mobile-navbar');
+        menuBtnMobile.children[0].classList.toggle('menu-mobile-on');
+        document.documentElement.classList.toggle('no-scroll-y');
+        
+        navbarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('show-mobile-navbar');
+                menuBtnMobile.children[0].classList.remove('menu-mobile-on');
+                document.documentElement.classList.remove('no-scroll-y');
+            });
+        });
+    };
 
-    if (currentScrollY > lastScrollY) {
-        navbar.classList.add('hide-navbar');
-    } else if (currentScrollY < lastScrollY) {
-        navbar.classList.remove('hide-navbar');
-    }
+    menuBtnMobile.addEventListener('click', navbarDisplayMobile);
+} else {
 
-    lastScrollY = currentScrollY;
+    let lastScrollY = 0;
+
+    const handleNavbarDisplay = () => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY) {
+            navbar.classList.add('hide-navbar');
+        } else if (currentScrollY < lastScrollY) {
+            navbar.classList.remove('hide-navbar');
+        }
+
+        lastScrollY = currentScrollY;
+    };
+
+    document.documentElement.style.setProperty('--scroll-padding', `${navbar.offsetHeight}px`);
+
+    document.addEventListener('scroll', handleNavbarDisplay);
 };
-
-document.documentElement.style.setProperty('--scroll-padding', `${navbar.offsetHeight}px`);
-
-document.addEventListener('scroll', handleNavbarDisplay);
 
 // Scroll Animation
 
@@ -131,7 +155,7 @@ if (isIndexPage()) {
         const windowHeight = window.innerHeight;
 
         storiesParallax.forEach(parallax => {
-            const parallaxOffset = parallax.getBoundingClientRect().top + scrollTop; 
+            const parallaxOffset = parallax.getBoundingClientRect().top + scrollTop;
             const parallaxHeight = parallax.offsetHeight;
             const isInView = scrollTop + windowHeight > parallaxOffset && scrollTop < parallaxOffset + parallaxHeight;
 
@@ -259,13 +283,11 @@ const displayConcerts = async () => {
     if (todayConcerts.length) {
         upcomingConcert = todayConcerts[0];
         isConcertToday = true;
-        ucContainer.children[0].innerText = 'hoy';
         ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
         ucContainer.children[2].href = upcomingConcert.ticket;
     } else if (upcomingConcerts.length) {
         upcomingConcert = upcomingConcerts[0];
         isConcertToday = false;
-        ucContainer.children[0].innerText = 'próximo concierto';
         ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
         ucContainer.children[2].href = upcomingConcert.ticket;
     };
@@ -283,7 +305,7 @@ const displayConcerts = async () => {
                         <div class="city">${concert.city}</div>
                         <div class="country">(<span >${concert.country}</span>)</div>
                     </div>
-                    <a class="ticket text" href="${concert.ticket}">entradas</a>
+                    <a class="ticket text" href="${concert.ticket}"></a>
                 </div>`;
     };
     const templateCardPast = (concert) => {
@@ -344,6 +366,8 @@ const displayConcerts = async () => {
             };
         };
     });
+
+    ticketTranslation(currentLanguage);
 };
 
 if (isIndexPage()) {
@@ -540,6 +564,8 @@ const storyTitle = document.querySelector('.story-title');
 const storyContent = document.querySelector('.story-content');
 const menuStories = Array.from(document.querySelectorAll('.menu-story'));
 
+let currentLanguage = "";
+
 const handleStoriesTranslation = async (lang) => {
     const response = await fetch('stories.json');
     const translations = await response.json();
@@ -574,8 +600,6 @@ const handleStoriesTranslation = async (lang) => {
         menuStories[i].innerText = translations[lang].title[i];
     };
 };
-
-handleStoriesTranslation('es');
 
 const translation = {
     ca: {
@@ -794,7 +818,6 @@ const ticketTranslation = (icon) => {
 // Language Selection 
 
 const languageIcons = document.querySelectorAll('.language-container');
-languageIcons[1].classList.add('bold-text');
 
 const handleLanguageSelection = (icon) => {
     for (let i = 0; i < languageIcons.length; i++) {
@@ -802,17 +825,67 @@ const handleLanguageSelection = (icon) => {
             languageIcons[i].classList.add('bold-text');
             languageIcons[(i + 1) % 3].classList.remove('bold-text');
             languageIcons[(i + 2) % 3].classList.remove('bold-text');
-        };
-    };
+
+            currentLanguage = languageIcons[i];
+            localStorage.setItem('selectedLanguage', currentLanguage.innerText);
+        }
+    }
 };
 
-languageIcons.forEach((icon) => {
-    icon.addEventListener('click', () => {
-        handleLanguageSelection(icon);
-        setTranslation(icon);
-        ticketTranslation(icon);
+const savedLanguage = localStorage.getItem('selectedLanguage') || 'CA';
+
+const applyInitialTranslation = () => {
+    const matchingIcon = Array.from(languageIcons).find(icon => icon.innerText === savedLanguage);
+
+    if (matchingIcon) {
+        handleLanguageSelection(matchingIcon);
+        setTranslation(matchingIcon);
+
+        if (!isIndexPage()) {
+            handleStoriesTranslation(matchingIcon.innerText.toLowerCase());
+        }
+    }
+};
+
+applyInitialTranslation();
+
+document.addEventListener('DOMContentLoaded', () => {
+    languageIcons.forEach((icon) => {
+        icon.addEventListener('click', () => {
+            handleLanguageSelection(icon);
+            setTranslation(icon);
+            ticketTranslation(icon);
+        });
     });
 });
+
+
+/* document.addEventListener('DOMContentLoaded', () => {
+    languageIcons.forEach((icon) => {
+        icon.addEventListener('click', () => {
+            handleLanguageSelection(icon);
+            setTranslation(icon);
+            ticketTranslation(icon);
+        });
+    });
+
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'ES';
+
+    if (savedLanguage) {
+        const matchingIcon = Array.from(languageIcons).find(icon => icon.innerText === savedLanguage);
+
+        if (matchingIcon) {
+            handleLanguageSelection(matchingIcon);
+            setTranslation(matchingIcon);
+            ticketTranslation(matchingIcon);
+
+            if (!isIndexPage()) {
+                handleStoriesTranslation(matchingIcon.innerText.toLowerCase());
+            }
+        }
+    }
+}); */
+
 
 // Stories Movement
 
