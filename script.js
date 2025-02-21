@@ -3,8 +3,6 @@ const isIndexPage = () => {
         .some(pathname => document.location.pathname.includes(pathname));
 };
 
-document.addEventListener("touchstart", event => event.preventDefault(), { passive: false });
-
 const stories = document.querySelectorAll('.story-link');
 
 // Navbar Display 
