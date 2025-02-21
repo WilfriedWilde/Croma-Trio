@@ -860,6 +860,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Click animations for mobile
 
+document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("contextmenu", event => event.preventDefault()); // Disable right-click/long-press menu
+    link.addEventListener("touchstart", event => {
+      clearTimeout(link.longPressTimeout); // Reset any previous long press
+      link.longPressTimeout = setTimeout(() => {
+        event.preventDefault(); // Prevent long-press menu
+      }, 500); // Adjust delay (500ms is a common long-press threshold)
+    });
+  
+    link.addEventListener("touchend", () => clearTimeout(link.longPressTimeout)); // Cancel if touch is released
+  });
+  
 const anchors = Array.from(document.querySelectorAll('a'));
 
 const storyClick = (event) => {
