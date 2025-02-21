@@ -52,12 +52,13 @@ if (window.innerWidth < 480) {
 
 // Scroll Animation
 
-const scrollTexts = document.querySelectorAll('.scroll-text')
+const scrollTexts = Array.from(document.querySelectorAll('.scroll-text'));
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.target.classList.contains('story-link')) {
-            entry.target.classList.toggle('show-story', entry.isIntersecting);
+            entry.target.parentNode.classList.toggle('show-story', entry.isIntersecting);
+            entry.target.getBoundingClientRect();
         } else {
             entry.target.classList.toggle('show', entry.isIntersecting);
             entry.target.getBoundingClientRect();
@@ -94,7 +95,6 @@ changeIconColor = () => {
         } else if (instaStops[i].classList.contains("four")) {
             instaStopsFour.push(instaStops[i]);
         }
-
     };
 
     if (isHovered) {
@@ -168,8 +168,6 @@ if (isIndexPage()) {
     };
 
     window.addEventListener('scroll', handleParallax);
-
-
 };
 
 // Concerts 
