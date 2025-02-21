@@ -70,7 +70,7 @@ body {
 /* NAVBAR */
 
 #navbar {
-  position: sticky;
+  position: fixed;
   display: grid;
   grid-template-areas:
     "language language logo logo logo logo logo logo icon icon"
@@ -1154,6 +1154,7 @@ footer {
   font-weight: 650;
   letter-spacing: 2px;
   text-align: center;
+  margin-top: 10rem;
 }
 
 .story-text {
@@ -1676,6 +1677,7 @@ html.no-scroll-y {
     font-weight: 650;
     letter-spacing: 2px;
     text-align: center;
+    margin-top: 0;
   }
 
   .story-content {
