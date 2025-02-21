@@ -1207,6 +1207,7 @@ html.no-scroll-y {
 }
 
 @media screen and (max-width: 480px) {
+
   #navbar {
     position: fixed;
     display: grid;
@@ -1407,9 +1408,21 @@ html.no-scroll-y {
 
   .story-link {
     font-size: 35px;
+    font-weight: 200;
     text-decoration: none;
     color: var(--dark-purple);
-    opacity: 0;
+    transform: scale(1);
+  }
+
+  .story-link.story-click {
+    color: black;
+    transform: scale(1.05);
+    font-weight: 550;
+    transition: all 0.8s ease;
+  }
+
+  a.anchor-click {
+    color: var(--pink);
   }
 
   #about-us h2 {

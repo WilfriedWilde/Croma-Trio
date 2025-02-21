@@ -2,6 +2,9 @@ const isIndexPage = () => {
     return !["/l'ampolla.html", "/triafobia.html", "/fum.html", "/uns_segons_de_silenci.html"]
         .some(pathname => document.location.pathname.includes(pathname));
 };
+
+document.addEventListener("touchstart", event => event.preventDefault(), { passive: false });
+
 const stories = document.querySelectorAll('.story-link');
 
 // Navbar Display 
@@ -18,7 +21,7 @@ if (window.innerWidth < 480) {
         navbar.classList.toggle('show-mobile-navbar');
         menuBtnMobile.children[0].classList.toggle('menu-mobile-on');
         document.documentElement.classList.toggle('no-scroll-y');
-        
+
         navbarLinks.forEach(link => {
             link.addEventListener('click', () => {
                 navbar.classList.remove('show-mobile-navbar');
@@ -857,6 +860,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Click animations for mobile
+
+const anchors = Array.from(document.querySelectorAll('a'));
+
+const storyClick = (event) => {
+    console.log(event.currentTarget)
+        event.currentTarget.classList.toggle('story-click');
+};
+
+const anchorClick = (event) => {
+    if (event.currentTarget.classList.contains('story-link')) {
+        return;
+    }
+    event.currentTarget.classList.toggle('anchor-click');
+};
+
+anchors.forEach(anchor => {
+    console.log(anchor);
+});
+
+stories.addEventListener('touchstart', storyClick);
+anchors.addEventListener('touchstart', anchorClick);
 
 /* document.addEventListener('DOMContentLoaded', () => {
     languageIcons.forEach((icon) => {
