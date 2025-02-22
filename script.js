@@ -802,12 +802,22 @@ const setTranslation = async (language) => {
 const ticketTranslation = (icon) => {
     if (isIndexPage()) {
         const ticketTexts = Array.from(document.querySelectorAll('.ticket'));
+        const ucTitle = document.getElementById('uc-title');
         if (icon.innerText === 'CA') {
-            ticketTexts.forEach(ticket => ticket.innerText = 'entrades')
+            ticketTexts.forEach(ticket => ticket.innerText = 'entrades');
+            if (isConcertToday) {
+                ucTitle.innerText = 'avui';
+            };
         } else if (icon.innerText === 'ES') {
-            ticketTexts.forEach(ticket => ticket.innerText = 'entradas')
+            ticketTexts.forEach(ticket => ticket.innerText = 'entradas');
+            if (isConcertToday) {
+                ucTitle.innerText = 'hoy';
+            };
         } else if (icon.innerText === 'EN') {
-            ticketTexts.forEach(ticket => ticket.innerText = 'tickets')
+            ticketTexts.forEach(ticket => ticket.innerText = 'tickets');
+            if (isConcertToday) {
+                ucTitle.innerText = 'today';
+            };
         };
     } else {
         return;
