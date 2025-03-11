@@ -282,13 +282,18 @@ const displayConcerts = async () => {
     if (todayConcerts.length) {
         upcomingConcert = todayConcerts[0];
         isConcertToday = true;
+        ucContainer.style.display = "flex";
         ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
         ucContainer.children[2].href = upcomingConcert.ticket;
     } else if (upcomingConcerts.length) {
         upcomingConcert = upcomingConcerts[0];
         isConcertToday = false;
+        ucContainer.style.display = "flex";
         ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
         ucContainer.children[2].href = upcomingConcert.ticket;
+        
+    } else {
+        ucContainer.style.display = "none";
     };
 
     const templateYear = (year) => {
