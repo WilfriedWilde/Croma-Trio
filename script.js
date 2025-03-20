@@ -30,7 +30,7 @@ if (window.innerWidth < 480) {
     };
 
     menuBtnMobile.addEventListener('click', navbarDisplayMobile);
-} else {
+} else if (window.innerWidth > 480 ){
 
     let lastScrollY = 0;
 
@@ -551,9 +551,10 @@ if (isIndexPage()) {
     images.forEach(image => {
         image.addEventListener('click', displayFullscreen)
     });
-
+    
     fullScreenContainer.addEventListener('click', hideFullscreen);
 };
+
 
 // Translation 
 
@@ -900,8 +901,12 @@ const anchorClick = (event) => {
     event.currentTarget.classList.toggle('anchor-click');
 };
 
-stories.addEventListener('touchstart', storyClick);
-anchors.addEventListener('touchstart', anchorClick);
+stories.forEach(story => story.addEventListener('touchstart', storyClick));
+anchors.forEach(anchor => {
+     if (!anchor.classList.contains("language-container")) {
+        anchor.addEventListener('touchstart', anchorClick)
+     }
+    });
 
 /* document.addEventListener('DOMContentLoaded', () => {
     languageIcons.forEach((icon) => {
