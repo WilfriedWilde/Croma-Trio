@@ -890,7 +890,6 @@ document.querySelectorAll("a").forEach(link => {
 const anchors = Array.from(document.querySelectorAll('a'));
 
 const storyClick = (event) => {
-    console.log(event.currentTarget)
         event.currentTarget.classList.toggle('story-click');
 };
 
@@ -900,10 +899,6 @@ const anchorClick = (event) => {
     }
     event.currentTarget.classList.toggle('anchor-click');
 };
-
-anchors.forEach(anchor => {
-    console.log(anchor);
-});
 
 stories.addEventListener('touchstart', storyClick);
 anchors.addEventListener('touchstart', anchorClick);
