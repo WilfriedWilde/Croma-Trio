@@ -30,7 +30,7 @@ if (window.innerWidth < 480) {
     };
 
     menuBtnMobile.addEventListener('click', navbarDisplayMobile);
-} else if (window.innerWidth > 480 ){
+} else if (window.innerWidth > 480) {
 
     let lastScrollY = 0;
 
@@ -187,29 +187,23 @@ let years = {
     upcoming: new Set()
 };
 
-const fetchSheetData = async () => {
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAV5kqu-WfugA8JDQj2r7WNAWq4YngYttf69SlZGj7OLDwbJw2isuZO1sFSpLvn76arcQbB8-hVkBK/pubhtml';
+const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAV5kqu-WfugA8JDQj2r7WNAWq4YngYttf69SlZGj7OLDwbJw2isuZO1sFSpLvn76arcQbB8-hVkBK/pub?output=csv';
 
+const fetchSheetData = async (url) => {
     try {
         const response = await fetch(url);
         const text = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        const table = doc.querySelector('tbody');
-        const rows = Array.from(table.querySelectorAll('tr')).splice(1);
+        const rows = text.split(/\r?\n/).map(row => row.split(","));
+        const headers = rows[0];
 
-        concerts = rows.map((row) => {
-            const cells = row.querySelectorAll('td');
-
-            return {
-                date: cells[0]?.innerText || 'N/A',
-                venue: cells[1]?.innerText || 'N/A',
-                venueLink: cells[2]?.innerText || 'N/A',
-                city: cells[3]?.innerText || 'N/A',
-                country: cells[4]?.innerText || 'N/A',
-                ticket: cells[5]?.innerText || 'N/A'
-            };
+        concerts = rows.slice(1).map(row => {
+            return Object.fromEntries(
+                headers.map((header, i) => {
+                    const cell = row[i] !== "" ? row[i] : 'N/A';
+                    return [header, cell];
+                }))
         });
+
         return concerts;
     } catch (error) {
         console.log('Error fetching sheet data', error);
@@ -217,10 +211,10 @@ const fetchSheetData = async () => {
     }
 };
 
-fetchSheetData()
+fetchSheetData(sheetUrl);
 
 const sortDates = async () => {
-    await fetchSheetData();
+    await fetchSheetData(sheetUrl);
 
     concerts.forEach((concert) => {
         concert.date = Number(`${concert.date.split('/').reverse().join('')}`)
@@ -273,7 +267,7 @@ const displayConcerts = async () => {
 
     const templateUpcomingConcert = (concert) => {
         return `<div id="uc-location">
-                    <a id="uc-venue" href="${concert.venueLink}">${concert.venue}</a>
+                    <a id="uc-venue" href="${concert.link}">${concert.venue}</a>
                     <div id="uc-city">${concert.city} (<span id="uc-country">${concert.country}</span>)</div>
                 </div>
                 <div id="uc-date">${concert.date}.${concert.year}</div>`;
@@ -291,7 +285,7 @@ const displayConcerts = async () => {
         ucContainer.style.display = "flex";
         ucContainer.children[1].innerHTML = templateUpcomingConcert(upcomingConcert);
         ucContainer.children[2].href = upcomingConcert.ticket;
-        
+
     } else {
         ucContainer.style.display = "none";
     };
@@ -303,7 +297,7 @@ const displayConcerts = async () => {
         return `<div class="concert-card">
                     <div class="date">${concert.date}</div>
                     <div class="venue">
-                        <a class="venue-link" href="${concert.venueLink}">${concert.venue}</a>
+                        <a class="venue-link" href="${concert.link}">${concert.venue}</a>
                     </div>
                     <div class="location-container">
                         <div class="city">${concert.city}</div>
@@ -316,7 +310,7 @@ const displayConcerts = async () => {
         return `<div class="concert-card-past">
                     <div class="date">${concert.date}</div>
                     <div class="venue-past">
-                        <a class="venue-link" href="${concert.venueLink}">${concert.venue}</a>
+                        <a class="venue-link" href="${concert.link}">${concert.venue}</a>
                     </div>
                     <div class="location-container">
                         <div class="city">${concert.city}</div>
@@ -340,6 +334,8 @@ const displayConcerts = async () => {
 
         concertsArray.forEach(concert => {
             const yearTexts = list.querySelectorAll('.year');
+
+            if (concert.ticket === 'N/A') concert.ticket = concert.link;
 
             yearTexts.forEach(yearText => {
                 if (list.id === "upcoming-concerts") {
@@ -551,7 +547,7 @@ if (isIndexPage()) {
     images.forEach(image => {
         image.addEventListener('click', displayFullscreen)
     });
-    
+
     fullScreenContainer.addEventListener('click', hideFullscreen);
 };
 
@@ -879,19 +875,19 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll("a").forEach(link => {
     link.addEventListener("contextmenu", event => event.preventDefault()); // Disable right-click/long-press menu
     link.addEventListener("touchstart", event => {
-      clearTimeout(link.longPressTimeout); // Reset any previous long press
-      link.longPressTimeout = setTimeout(() => {
-        event.preventDefault(); // Prevent long-press menu
-      }, 500); // Adjust delay (500ms is a common long-press threshold)
+        clearTimeout(link.longPressTimeout); // Reset any previous long press
+        link.longPressTimeout = setTimeout(() => {
+            event.preventDefault(); // Prevent long-press menu
+        }, 500); // Adjust delay (500ms is a common long-press threshold)
     });
-  
+
     link.addEventListener("touchend", () => clearTimeout(link.longPressTimeout)); // Cancel if touch is released
-  });
-  
+});
+
 const anchors = Array.from(document.querySelectorAll('a'));
 
 const storyClick = (event) => {
-        event.currentTarget.classList.toggle('story-click');
+    event.currentTarget.classList.toggle('story-click');
 };
 
 const anchorClick = (event) => {
@@ -903,10 +899,10 @@ const anchorClick = (event) => {
 
 stories.forEach(story => story.addEventListener('touchstart', storyClick));
 anchors.forEach(anchor => {
-     if (!anchor.classList.contains("language-container")) {
+    if (!anchor.classList.contains("language-container")) {
         anchor.addEventListener('touchstart', anchorClick)
-     }
-    });
+    }
+});
 
 /* document.addEventListener('DOMContentLoaded', () => {
     languageIcons.forEach((icon) => {

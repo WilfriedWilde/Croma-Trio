@@ -788,7 +788,6 @@ body {
   align-items: flex-start;
   width: 100%;
   margin-top: 70px;
-  gap: 30px;
 }
 
 .year {
@@ -806,7 +805,7 @@ body {
   justify-items: start;
   align-items: center;
   border-bottom: solid 1px white;
-  height: 80px;
+  height: 150px;
 }
 
 .concert-card-past {
@@ -816,7 +815,7 @@ body {
   justify-items: start;
   align-items: center;
   border-bottom: solid 1px white;
-  height: 80px;
+  height: 150px;
 }
 
 .date {
@@ -850,15 +849,16 @@ body {
 
 .location-container {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   justify-self: end;
-  align-items: first baseline;
+  align-items: center;
 }
 
 .city {
   font-size: 30px;
   font-weight: 200;
   font-style: italic;
+  text-align: center;
 }
 
 .country {
@@ -1491,6 +1491,14 @@ html.no-scroll-y {
     width: 100%;
   }
 
+  .concert-card {
+    height: 100px;
+  }
+  
+  .concert-card-past {
+    height: 100px;
+  }
+
   .date {
     font-size: 20px;
     font-weight: 400;
@@ -1518,7 +1526,6 @@ html.no-scroll-y {
   .city {
     font-size: 15px;
     font-weight: 200;
-    font-style: italic;
   }
 
   .country {
@@ -1571,13 +1578,7 @@ html.no-scroll-y {
   }
 
   .year-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
     margin-top: 2.5rem;
-    gap: 0;
   }
 
   #gallery {
