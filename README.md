@@ -48,10 +48,10 @@ A key aspect of the project was to reflect the interdisciplinary nature of the b
 
 ## Tech Stack
 
-* HTML5 – structure
-* CSS3 – layout and styling
-* JavaScript (Vanilla) – interactivity, dynamic content, and translation system
-* Google Sheets API – event management
+* **HTML5** – structure
+* **CSS3** – layout and styling
+* **JavaScript (Vanilla)** – interactivity, dynamic content, and translation system
+* **Google Sheets API** – event management
 
 ## Purpose
 
